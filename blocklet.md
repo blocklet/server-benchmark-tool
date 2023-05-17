@@ -1,3 +1,6 @@
-# template-react
+# a component for blocklet server benchmark
 
-A react template for creating a new blocklet project.
+## Web API
+- /api/date
+- /api/user/{did}?return=0 # wrap BlockletSDK:getUser
+- /api/users?search=xxx&return=0 # wrap BlockletSDK:getUsers
