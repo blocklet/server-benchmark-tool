@@ -7,15 +7,15 @@
 1. Prepare: start a server
 2. Install https://test.store.blocklet.dev/blocklets/z2qa7xJnpqbLZ1jrnhCx9Z4vsLFopR1pe9M9U
 3. Config "Invited only" for Static Demo component in Blocklet Dashboard
-4. Save login_token in cookie in browser
-5. Save any User Did in Blocklet Dashboard
+4. Save login_token from cookie in browser
+5. Save any User Did from Blocklet Dashboard
 6. Start Benchmark
 
 ```bash
-$ ./benchmark.js http://your-app --user-did <did> --login-token <loginToken>
+$ ./benchmark-server.js http://your-app --user-did <did> --login-token <loginToken>
 
 # set custom concurrenty
-$ ./benchmark.js -c 500 http://your-app --user-did <did> --login-token <loginToken>
+$ ./benchmark-server.js -c 500 http://your-app --user-did <did> --login-token <loginToken>
 ```
 
 7. Results
