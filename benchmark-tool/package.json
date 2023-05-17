@@ -15,6 +15,7 @@
     "cli-table-redemption": "^1.0.1",
     "commander": "^10.0.1",
     "shelljs": "^0.8.5",
+    "systeminformation": "^5.17.12",
     "url-join": "^4.0.1"
   }
 }

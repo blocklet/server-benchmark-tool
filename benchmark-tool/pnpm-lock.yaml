@@ -13,6 +13,9 @@ dependencies:
   shelljs:
     specifier: ^0.8.5
     version: 0.8.5
+  systeminformation:
+    specifier: ^5.17.12
+    version: 5.17.12
   url-join:
     specifier: ^4.0.1
     version: 4.0.1
@@ -227,6 +230,13 @@ packages:
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+    dev: false
+
+  /systeminformation@5.17.12:
+    resolution: {integrity: sha512-I3pfMW2vue53u+X08BNxaJieaHkRoMMKjWetY9lbYJeWFaeWPO6P4FkNc4XOCX8F9vbQ0HqQ25RJoz3U/B7liw==}
+    engines: {node: '>=8.0.0'}
+    os: [darwin, linux, win32, freebsd, openbsd, netbsd, sunos, android]
+    hasBin: true
     dev: false
 
   /url-join@4.0.1:

@@ -9,6 +9,7 @@ const shelljs = require('shelljs');
 const Table = require('cli-table-redemption');
 const { bold, cyan } = require('chalk');
 const joinUrl = require('url-join');
+const { getSysInfo } = require('./util/sysinfo');
 const { version } = require('./package.json');
 
 const checkAb = () => {
@@ -29,6 +30,17 @@ const findOutput = (stdout) => {
     }
   }
   return {};
+};
+
+const getServerVersion = (origin) => {
+  const { stdout } = shelljs.exec(`curl ${joinUrl(origin, '/.well-known/service/api/env')}`, { silent: true });
+  for (const line of (stdout || '').split('\n')) {
+    if (line.trim().startsWith('serverVersion')) {
+      return line.split('"')[1];
+    }
+  }
+
+  return '';
 };
 
 const program = new Command();
@@ -128,6 +140,12 @@ program
     // output
     console.log(`\n${bold('-----------------')}\n`);
 
+    const sysInfo = await getSysInfo();
+    const serverVersion = getServerVersion(origin);
+    console.log(cyan('Server Version:'), serverVersion);
+    console.log(cyan('Platform:'), sysInfo.os?.platform);
+    console.log(cyan('CPU Cores:'), `${sysInfo.cpu?.cores}`);
+    console.log(cyan('Memory (GB):'), `${Math.ceil((sysInfo.mem?.total || 0) / 1024 / 1024 / 1024)}`);
     console.log(table.toString());
   });
 
