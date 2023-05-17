@@ -1,0 +1,20 @@
+{
+  "name": "benchmark-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "benchmark.js",
+  "bin": "./benchmark.js",
+  "scripts": {
+    "benchmark": "node benchmark.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "cli-table-redemption": "^1.0.1",
+    "commander": "^10.0.1",
+    "shelljs": "^0.8.5",
+    "url-join": "^4.0.1"
+  }
+}
