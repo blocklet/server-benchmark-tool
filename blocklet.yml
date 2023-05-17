@@ -1,6 +1,6 @@
-version: 1.0.0
+version: 1.0.1
 did: z2qa7xJnpqbLZ1jrnhCx9Z4vsLFopR1pe9M9U
-title: perf-simple
+title: Server Benchmark Tool
 description: A Blocklet DAPP blocklet
 keywords:
   - blocklet
@@ -49,5 +49,11 @@ capabilities:
   component: true
   navigation: true
 screenshots: []
-components: []
 name: z2qa7xJnpqbLZ1jrnhCx9Z4vsLFopR1pe9M9U
+components:
+  - title: Static Demo
+    mountPoint: /invited-only
+    source:
+      store: https://store.blocklet.dev
+      name: static-demo-blocklet
+      version: latest

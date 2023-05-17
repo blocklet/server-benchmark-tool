@@ -30,12 +30,12 @@ router.get('/users', async (req, res) => {
   const { search } = req.query;
   const { return: isReturn } = req.query;
 
-  if (!search) {
-    res.status(400).send('Missing search query');
-    return;
+  const query = {} as { search?: string };
+  if (search) {
+    query.search = search as string;
   }
 
-  const { users } = await await client.getUsers({ query: { search: search as string } });
+  const { users } = await await client.getUsers({ query });
 
   if (isReturn === '0') {
     res.status(200).json(null);
@@ -45,6 +45,15 @@ router.get('/users', async (req, res) => {
   res.json(users);
 });
 
-router.get('/date', (_req, res) => res.status(200).send(new Date().toISOString()));
+router.get('/date', (req, res) => {
+  const { timeout } = req.query;
+  if (timeout) {
+    setTimeout(() => {
+      res.status(200).send(new Date().toISOString());
+    }, Number(timeout));
+    return;
+  }
+  res.status(200).send(new Date().toISOString());
+});
 
 export default router;
