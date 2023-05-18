@@ -44,3 +44,10 @@ Memory (GB): 8
 └─────────────────────────────────────────────────────┴─────────────┴──────────┴─────────┴──────┴───────┴────────┴────────┴────────┴────────┴───────────┘
 
 ```
+
+## FAQ
+
+How to access blocklet by local domain?
+1. Config `server.benchmark.local` to `127.0.0.1` in `/etc/hosts`
+2. Add `server.benchmark.local` from Blocklet Dashboard - Configuration
+3. Run `./benchmark-server.js http://server.benchmark.local`
