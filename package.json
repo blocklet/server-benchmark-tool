@@ -1,6 +1,6 @@
 {
   "name": "perf-simple",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "scripts": {
     "dev": "blocklet dev",
     "eject": "vite eject",
@@ -40,7 +40,8 @@
   "dependencies": {
     "@arcblock/did-auth": "^1.18.78",
     "@arcblock/did-auth-storage-nedb": "^1.7.1",
-    "@blocklet/sdk": "1.16.8-beta-b3039c78",
+    "@blocklet/cli": "1.16.8-next-d1e52353",
+    "@blocklet/sdk": "1.16.8-next-d1e52353",
     "@ocap/client": "^1.18.78",
     "@ocap/mcrypto": "^1.18.78",
     "@ocap/wallet": "^1.18.78",
