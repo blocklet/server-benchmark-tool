@@ -28,11 +28,12 @@ program
   .version(version)
   .arguments('<url>')
   .option('-c, --concurrency <number>', 'Number of multiple requests to perform at a time. Default is 100.', 100)
+  .option('-n, --requests <number>', 'Number of requests to perform.')
   .option('--times <number>', 'Times of testing. Default is 3.', 3)
   .option('--login-token [string]', 'login token')
   .option('--format [string]', 'output format. Can be "row", "json", "table"', 'table')
   .option('--hide-version', 'not display version of benchmark-tool', false)
-  .action(async (url, { concurrency, times, loginToken, format, hideVersion } = {}) => {
+  .action(async (url, { concurrency, requests, times, loginToken, format, hideVersion } = {}) => {
     if (!hideVersion) {
       console.log(bold(`Benchmark v${version}\n`));
     }
@@ -53,7 +54,7 @@ program
       style: { head: ['cyan', 'bold'] },
     });
 
-    const count = concurrency * 10;
+    const count = requests || concurrency * 10;
 
     const result = {
       concurrency,

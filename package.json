@@ -1,6 +1,6 @@
 {
   "name": "perf-simple",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "dev": "blocklet dev",
     "eject": "vite eject",
@@ -38,12 +38,12 @@
     ]
   },
   "dependencies": {
-    "@arcblock/did-auth": "^1.18.78",
+    "@arcblock/did-auth": "^1.18.84",
     "@arcblock/did-auth-storage-nedb": "^1.7.1",
-    "@blocklet/sdk": "1.16.8-beta-b3039c78",
-    "@ocap/client": "^1.18.78",
-    "@ocap/mcrypto": "^1.18.78",
-    "@ocap/wallet": "^1.18.78",
+    "@blocklet/sdk": "1.16.12",
+    "@ocap/client": "^1.18.84",
+    "@ocap/mcrypto": "^1.18.84",
+    "@ocap/wallet": "^1.18.84",
     "axios": "^1.4.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
@@ -58,8 +58,8 @@
     "rimraf": "^5.0.0"
   },
   "devDependencies": {
-    "@arcblock/eslint-config": "^0.2.3",
-    "@arcblock/eslint-config-ts": "^0.2.3",
+    "@arcblock/eslint-config": "^0.2.4",
+    "@arcblock/eslint-config-ts": "^0.2.4",
     "@types/compression": "^1.7.2",
     "@types/cookie-parser": "^1.4.3",
     "@types/cors": "^2.8.13",
@@ -82,7 +82,7 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4",
     "vite": "^4.3.5",
-    "vite-plugin-blocklet": "^0.6.2",
+    "vite-plugin-blocklet": "^0.6.6",
     "vite-plugin-node-polyfills": "^0.8.2",
     "vite-plugin-svgr": "^3.2.0",
     "zx": "^7.2.2"

@@ -49,11 +49,12 @@ program
   .version(version)
   .arguments('<origin>')
   .option('-c, --concurrency <number>', 'Number of multiple requests to perform at a time. Default is 100.', 100)
+  .option('-n, --requests <number>', 'Number of requests to perform.')
   .option('--times <number>', 'Times of testing. Default is 3.', 3)
   .option('--login-token [string]', 'login token')
   .option('--user-did [string]', 'user did')
   .option('--format [string]', 'output format. Can be "row", "json", "table"', 'table')
-  .action(async (origin, { concurrency, times, loginToken, userDid } = {}) => {
+  .action(async (origin, { concurrency, requests, times, loginToken, userDid } = {}) => {
     console.log(bold(`Benchmark v${version}\n`));
 
     checkAb();
@@ -87,7 +88,7 @@ program
         `${path.join(
           __dirname,
           'benchmark-tool.js'
-        )} -c ${concurrency} --times ${times} --login-token ${token} --format raw --hide-version '${url}'`,
+        )} -c ${concurrency} -n ${requests} --times ${times} --login-token ${token} --format raw --hide-version '${url}'`,
         { silent: false }
       );
 

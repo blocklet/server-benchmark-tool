@@ -1,13 +1,18 @@
 import { Link } from 'react-router-dom';
 
-import logo from '../logo.svg';
-
 function Home() {
   return (
     <header className="app-header">
-      <img src={logo} className="app-logo" alt="logo" />
+      <h1>Component for blocklet server benchmark</h1>
+      <p>Web API</p>
       <pre style={{ textAlign: 'left' }}>
-        <code>window.blocklet = {JSON.stringify(window.blocklet, null, 2)}</code>
+        <code>{`
+- /api/date
+- /api/date?timeout=1000
+- /api/user/{did}?return=0
+- /api/users&return=0
+- /api/users?search=xxx&return=0
+`}</code>
       </pre>
       <Link className="app-link" to="/about">
         About

@@ -15,7 +15,7 @@
 $ ./benchmark-server.js http://your-app --user-did <did> --login-token <loginToken>
 
 # set custom concurrenty
-$ ./benchmark-server.js -c 500 http://your-app --user-did <did> --login-token <loginToken>
+$ ./benchmark-server.js -c 200 -n 10000 http://your-app --user-did <did> --login-token <loginToken>
 ```
 
 7. Results
@@ -43,6 +43,12 @@ Memory (GB): 8
 │ /api/users                                          │ 100         │ 1000     │ 100%    │ 363  │ 11 ms │ 260 ms │ 315 ms │ 425 ms │ 469 ms │ 2.77 s    │
 └─────────────────────────────────────────────────────┴─────────────┴──────────┴─────────┴──────┴───────┴────────┴────────┴────────┴────────┴───────────┘
 
+```
+
+## Use benchmark-tool.js
+
+```bash
+$ ./benchmark-tool.js -c 200 -n 10000 http://your-app --times 2 --login-token <loginToken> <url>
 ```
 
 ## FAQ
