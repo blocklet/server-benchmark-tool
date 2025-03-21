@@ -10,9 +10,9 @@
     "clean": "node scripts/build-clean.js",
     "bundle": "tsc --noEmit && npm run bundle:client && npm run bundle:api",
     "bundle:client": "vite build",
-    "bundle:api": "npm run clean && tsc -p tsconfig.api.json && blocklet bundle --zip --create-release",
-    "deploy": "npm run bundle && blocklet deploy .blocklet/bundle",
-    "upload": "npm run bundle && blocklet upload .blocklet/release/blocklet.json",
+    "bundle:api": "npm run clean && tsc -p tsconfig.api.json && bn bundle --zip --create-release",
+    "deploy": "npm run bundle && bn deploy .blocklet/bundle",
+    "upload": "npm run bundle && bn upload .blocklet/release/blocklet.json",
     "prepare": "husky install",
     "bump-version": "zx --quiet scripts/bump-version.mjs"
   },
@@ -40,7 +40,7 @@
   "dependencies": {
     "@arcblock/did-auth": "^1.18.84",
     "@arcblock/did-auth-storage-nedb": "^1.7.1",
-    "@blocklet/sdk": "1.16.12",
+    "@blocklet/sdk": "1.16.40",
     "@ocap/client": "^1.18.84",
     "@ocap/mcrypto": "^1.18.84",
     "@ocap/wallet": "^1.18.84",

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable @typescript-eslint/comma-dangle */
 /* eslint-disable no-param-reassign */
 /* eslint-disable prefer-template */
 /* eslint-disable no-console */
@@ -33,7 +34,9 @@ const findOutput = (stdout) => {
 };
 
 const getServerVersion = (origin) => {
-  const { stdout } = shelljs.exec(`curl ${joinUrl(origin, '/.well-known/service/api/env')}`, { silent: true });
+  const { stdout } = shelljs.exec(`curl ${joinUrl(origin, '/.well-known/service/api/env')}`, {
+    silent: true,
+  });
   for (const line of (stdout || '').split('\n')) {
     if (line.trim().startsWith('serverVersion')) {
       return line.split('"')[1];
@@ -70,14 +73,21 @@ program
       { name: '/api/date', api: '/api/date' },
       loginToken && { name: '/api/date (with session)', api: '/api/date', loginToken },
       { name: '/.well-known/service/api/did/session', api: '/.well-known/service/api/did/session' },
+      // { name: '/.well-known/service/openembed.json', api: '/.well-known/service/openembed.json' },
+      { name: '/.well-known/service/api/did/login', api: '/.well-known/service/api/did/login' },
       loginToken && {
         name: '/.well-known/service/api/did/session (with session)',
         api: '/.well-known/service/api/did/session',
         loginToken,
       },
+      userDid && {
+        name: '/.well-known/service/api/user/privacy/config',
+        api: `/.well-known/service/api/user/privacy/config?did=${userDid}`,
+      },
       { name: '/invited-only (without session)', api: '/invited-only' },
       userDid && { name: `/api/user/${userDid}`, api: `/api/user/${userDid}?return=0` },
       { name: '/api/users', api: '/api/users?return=0' },
+      { name: '/__blocklet__.js', api: '/__blocklet__.js' },
     ].filter(Boolean);
 
     const results = [];
@@ -108,6 +118,7 @@ program
       'Concurrency',
       'Requests',
       'Success',
+      'status200',
       'RPS',
       'Min',
       '50%',
@@ -128,6 +139,7 @@ program
         result.concurrency,
         result.count,
         result.success,
+        result.status200,
         result.rps,
         result.min,
         result.t50,

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable @typescript-eslint/comma-dangle */
 /* eslint-disable prefer-template */
 /* eslint-disable no-console */
 
@@ -47,7 +48,20 @@ program
 
     console.log(`${bold('Benchmarking')} ${cyan(url)}\n`);
 
-    const tableHead = ['Concurrency', 'Requests', 'Success', 'RPS', 'Min', '50%', '90%', '99%', 'Max', 'Test Time'];
+    // 增加 status200 列
+    const tableHead = [
+      'Concurrency',
+      'Requests',
+      'Success',
+      'status200',
+      'RPS',
+      'Min',
+      '50%',
+      '90%',
+      '99%',
+      'Max',
+      'Test Time',
+    ];
 
     const table = new Table({
       head: tableHead,
@@ -60,6 +74,7 @@ program
       concurrency,
       count,
       success: [],
+      status200: [],
       rps: [],
       min: [],
       t50: [],
@@ -71,7 +86,7 @@ program
 
     for (let i = 0; i < times; i++) {
       // eslint-disable-next-line no-await-in-loop
-      await sleep(1000);
+      await sleep(500);
 
       console.log(
         `Time: ${i + 1}. ${bold('Benchmarking')} ${bold(url)} with ${cyan(concurrency)} concurrency and ${cyan(
@@ -86,8 +101,10 @@ program
         process.exit(code);
       }
 
+      let failed = 0;
+      let non2xx = 0;
+
       stdout.split('\n').forEach((line) => {
-        // push 'Requests per second' and '50%' and '90%' to table
         if (line.includes('Requests per second')) {
           const rps = line.split(':')[1].trim().split(' ')[0];
           result.rps.push(Number(rps));
@@ -114,15 +131,26 @@ program
           result.max.push(Number(t[t.length - 1]));
         }
         if (line.includes('Failed requests')) {
-          const t = line.split(':')[1].trim();
-          result.success.push(((count - parseInt(t, 10)) / count) * 100);
+          failed = parseInt(line.split(':')[1].trim(), 10);
+        }
+        if (line.includes('Non-2xx responses')) {
+          non2xx = parseInt(line.split(':')[1].trim(), 10);
         }
       });
+
+      // 计算成功请求数：只要有返回就算成功，即 count - failed
+      const successPercent = ((count - failed) / count) * 100;
+      // 单独记录状态码为 200 的请求比例
+      const status200Percent = ((count - failed - non2xx) / count) * 100;
+
+      result.success.push(successPercent);
+      result.status200.push(status200Percent);
 
       console.log(`${bold('-----------------')}\n`);
     }
 
     result.success = average(result.success, 2) + '%';
+    result.status200 = average(result.status200, 2) + '%';
     result.rps = average(result.rps);
     result.min = average(result.min) + ' ms';
     result.t50 = average(result.t50) + ' ms';
@@ -133,7 +161,7 @@ program
 
     table.push(Object.values(result));
 
-    // output
+    // 输出结果
     if (format === 'raw') {
       console.log(JSON.stringify(result));
     } else if (format === 'json') {
