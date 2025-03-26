@@ -12,14 +12,13 @@
 6. Start Benchmark
 
 ```bash
-$ ./benchmark-server.js http://your-app --user-did <did> --login-token <loginToken>
 
-# set custom concurrenty
-$ ./benchmark-server.js -c 200 -n 10000 http://your-app --user-did <did> --login-token <loginToken>
-
-# set timelimit
-$ ./benchmark-server.js -c 200 -n 1000000 -t 10 http://your-app --user-did <did> --login-token <loginToken>
+./benchmark-node.js -c 2  -t 3  -o https://bbqathtgbx72pp3ee7zbgbvujqycl4er6ga2cxrtafq.did.abtnet.io:8443/ --user-did zxxxxx --team-did zxxxxxxxx --login-token eyJxxxx
 ```
+
+## Server use cluster
+
+`ABT_NODE_MAX_CLUSTER_SIZE=3 blocklet server start`
 
 7. Results
 

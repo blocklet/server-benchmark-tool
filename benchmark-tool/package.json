@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@abtnode/client": "1.16.41-beta-20250325-154552-2bf78c26",
     "chalk": "^4.1.2",
     "cli-table-redemption": "^1.0.1",
     "commander": "^10.0.1",

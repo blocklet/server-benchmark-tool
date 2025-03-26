@@ -96,18 +96,6 @@ program
       userDid && { name: `/api/user/${userDid}`, api: `/api/user/${userDid}?return=0` },
       { name: '/api/users', api: '/api/users?return=0' },
       { name: '/__blocklet__.js', api: '/__blocklet__.js' },
-      // {
-      //   name: '/.well-known/service/api/gql (getNotifications)',
-      //   api: '/.well-known/service/api/gql',
-      //   loginToken,
-      //   body: getNotifications(teamDid, userDid),
-      // },
-      // {
-      //   name: '/.well-known/service/api/gql (getNotificationComponents)',
-      //   api: '/.well-known/service/api/gql',
-      //   loginToken,
-      //   body: getNotificationComponents(teamDid, userDid),
-      // },
     ].filter(Boolean);
 
     const results = [];
