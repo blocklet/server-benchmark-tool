@@ -31,10 +31,12 @@ program
   .option('-c, --concurrency <number>', 'Number of multiple requests to perform at a time. Default is 100.', 100)
   .option('-n, --requests <number>', 'Number of requests to perform.')
   .option('--times <number>', 'Times of testing. Default is 3.', 3)
+  .option('-t, --timelimit <number>', 'Duration of the test in seconds.')
   .option('--login-token [string]', 'login token')
   .option('--format [string]', 'output format. Can be "row", "json", "table"', 'table')
+  .option('--body [string]', 'body of request')
   .option('--hide-version', 'not display version of benchmark-tool', false)
-  .action(async (url, { concurrency, requests, times, loginToken, format, hideVersion } = {}) => {
+  .action(async (url, { concurrency, requests, times, loginToken, format, hideVersion, timelimit, body } = {}) => {
     if (!hideVersion) {
       console.log(bold(`Benchmark v${version}\n`));
     }
@@ -90,12 +92,19 @@ program
 
       console.log(
         `Time: ${i + 1}. ${bold('Benchmarking')} ${bold(url)} with ${cyan(concurrency)} concurrency and ${cyan(
-          count
-        )} requests...\n`
+          count || 0
+        )} or ${timelimit || 0} seconds requests...\n`
       );
 
-      const header = loginToken ? `-H 'cookie: login_token=${loginToken}'` : '';
-      const res = shelljs.exec(`ab -r -c ${concurrency} -n ${count} ${header} ${url}`, { silent: false });
+      const header = loginToken && loginToken !== 'undefined' ? `-H 'cookie: login_token=${loginToken}'` : '';
+      const timelimitParam = timelimit && timelimit !== 'undefined' ? `-t ${timelimit}` : '';
+      const countParam = count && count !== 'undefined' ? `-n ${count}` : '';
+      const bodyParam = body && body !== 'undefined' ? `-p ${body} -T "application/json"` : '';
+      const command = `ab -r -c ${concurrency} ${countParam} ${timelimitParam} ${header} ${bodyParam} ${url}`;
+      console.log(command);
+      const res = shelljs.exec(command, {
+        silent: false,
+      });
       const { stdout, code } = res;
       if (code !== 0) {
         process.exit(code);

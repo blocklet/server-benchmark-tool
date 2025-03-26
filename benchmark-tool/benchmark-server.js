@@ -10,6 +10,7 @@ const shelljs = require('shelljs');
 const Table = require('cli-table-redemption');
 const { bold, cyan } = require('chalk');
 const joinUrl = require('url-join');
+const fs = require('fs');
 const { getSysInfo } = require('./util/sysinfo');
 const { version } = require('./package.json');
 
@@ -54,10 +55,12 @@ program
   .option('-c, --concurrency <number>', 'Number of multiple requests to perform at a time. Default is 100.', 100)
   .option('-n, --requests <number>', 'Number of requests to perform.')
   .option('--times <number>', 'Times of testing. Default is 3.', 3)
+  .option('-t, --timelimit <number>', 'Duration of the test in seconds.')
   .option('--login-token [string]', 'login token')
   .option('--user-did [string]', 'user did')
+  .option('--team-did [string]', 'team did')
   .option('--format [string]', 'output format. Can be "row", "json", "table"', 'table')
-  .action(async (origin, { concurrency, requests, times, loginToken, userDid } = {}) => {
+  .action(async (origin, { concurrency, requests, times, loginToken, userDid, timelimit } = {}) => {
     console.log(bold(`Benchmark v${version}\n`));
 
     checkAb();
@@ -80,6 +83,11 @@ program
         api: '/.well-known/service/api/did/session',
         loginToken,
       },
+      loginToken && {
+        name: '/.well-known/service/api/user-session',
+        api: '/.well-known/service/api/user-session',
+        loginToken,
+      },
       userDid && {
         name: '/.well-known/service/api/user/privacy/config',
         api: `/.well-known/service/api/user/privacy/config?did=${userDid}`,
@@ -88,17 +96,44 @@ program
       userDid && { name: `/api/user/${userDid}`, api: `/api/user/${userDid}?return=0` },
       { name: '/api/users', api: '/api/users?return=0' },
       { name: '/__blocklet__.js', api: '/__blocklet__.js' },
+      // {
+      //   name: '/.well-known/service/api/gql (getNotifications)',
+      //   api: '/.well-known/service/api/gql',
+      //   loginToken,
+      //   body: getNotifications(teamDid, userDid),
+      // },
+      // {
+      //   name: '/.well-known/service/api/gql (getNotificationComponents)',
+      //   api: '/.well-known/service/api/gql',
+      //   loginToken,
+      //   body: getNotificationComponents(teamDid, userDid),
+      // },
     ].filter(Boolean);
 
     const results = [];
 
-    list.forEach(({ name, api, loginToken: token }) => {
+    const realTimelimit =
+      timelimit && timelimit !== 'undefined' ? Math.max(Math.round(timelimit / list.length), 1) : 'undefined';
+
+    const startTime = Date.now();
+    let i = 0;
+    list.forEach(({ name, api, loginToken: token, body }) => {
+      i++;
       const url = joinUrl(origin, api);
+      let tempBodyPath = 'undefined';
+      if (body && body !== 'undefined') {
+        tempBodyPath = path.join(__dirname, 'temp', `temp-body-${i}.json`);
+        if (!fs.existsSync(path.dirname(tempBodyPath))) {
+          fs.mkdirSync(path.dirname(tempBodyPath), { recursive: true });
+        }
+        fs.writeFileSync(tempBodyPath, body);
+      }
+
       const res = shelljs.exec(
         `${path.join(
           __dirname,
           'benchmark-tool.js'
-        )} -c ${concurrency} -n ${requests} --times ${times} --login-token ${token} --format raw --hide-version '${url}'`,
+        )} -c ${concurrency} -n ${requests} --times ${times} -t ${realTimelimit} --body ${tempBodyPath} --login-token ${token} --format raw --hide-version '${url}'`,
         { silent: false }
       );
 
@@ -159,6 +194,7 @@ program
     console.log(cyan('Platform:'), sysInfo.os?.platform);
     console.log(cyan('CPU Cores:'), `${sysInfo.cpu?.cores}`);
     console.log(cyan('Memory (GB):'), `${Math.ceil((sysInfo.mem?.total || 0) / 1024 / 1024 / 1024)}`);
+    console.log(cyan('Test Time:'), `${(Date.now() - startTime) / 1000} seconds`);
     console.log(table.toString());
   });
 

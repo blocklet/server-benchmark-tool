@@ -16,6 +16,9 @@ $ ./benchmark-server.js http://your-app --user-did <did> --login-token <loginTok
 
 # set custom concurrenty
 $ ./benchmark-server.js -c 200 -n 10000 http://your-app --user-did <did> --login-token <loginToken>
+
+# set timelimit
+$ ./benchmark-server.js -c 200 -n 1000000 -t 10 http://your-app --user-did <did> --login-token <loginToken>
 ```
 
 7. Results
@@ -54,6 +57,7 @@ $ ./benchmark-tool.js -c 200 -n 10000 http://your-app --times 2 --login-token <l
 ## FAQ
 
 How to access blocklet by local domain?
+
 1. Config `server.benchmark.local` to `127.0.0.1` in `/etc/hosts`
 2. Add `server.benchmark.local` from Blocklet Dashboard - Configuration
 3. Run `./benchmark-server.js http://server.benchmark.local`
