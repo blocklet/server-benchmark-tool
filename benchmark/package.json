@@ -1,10 +1,10 @@
 {
-  "name": "@blocklet/benchmark",
+  "name": "@blocklet/server-benchmark",
   "version": "0.0.1",
   "description": "",
   "main": "benchmark.js",
   "bin": {
-    "blocklet-benchmark": "./benchmark.js"
+    "blocklet-server-benchmark": "./benchmark.js"
   },
   "scripts": {
     "blocklet-benchmark": "node benchmark.js"
