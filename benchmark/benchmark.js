@@ -140,7 +140,7 @@ async function benchmarkEndpoint(url, { concurrency, timelimit, loginToken, user
   await Promise.all(allPromises);
 
   const totalTimeSec = Math.max((Date.now() - startTime) / 1000, 1);
-  const rps = completed / totalTimeSec;
+  const rps = successes / totalTimeSec;
   latencies.sort((a, b) => a - b);
   const min = latencies[0] || 0;
   const med = latencies[Math.floor(latencies.length / 2)] || 0;
