@@ -7,9 +7,10 @@
 1. Prepare: start a server
 2. Install https://test.store.blocklet.dev/blocklets/z2qaAYeWTZkhb5yNHqwos6mJLLK9ykHrxehjx
 3. Config "Invited only" for Static Demo component in Blocklet Dashboard
-4. Save login_token from cookie in browser
-5. Save any User Did from Blocklet Dashboard
-6. Start Benchmark
+4. Install Media kit
+5. Save login_token from cookie in browser
+6. Save any User Did from Blocklet Dashboard
+7. Start Benchmark
 
 ## Server use cluster
 
