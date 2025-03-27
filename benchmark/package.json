@@ -4,7 +4,7 @@
   "description": "",
   "main": "benchmark.js",
   "bin": {
-    "blocklet-server-benchmark": "./benchmark.js"
+    "@blocklet/server-benchmark": "./benchmark.js"
   },
   "scripts": {
     "blocklet-benchmark": "node benchmark.js"
