@@ -1,6 +1,4 @@
-# Benchmark Tool
-
-## Benchmark Server
+# Server Benchmark
 
 ## How to use
 
