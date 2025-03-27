@@ -49,9 +49,9 @@ capabilities:
   component: true
   navigation: true
 screenshots:
-  - 63a9bad266fc74fb0c47ff8a94c7d5d9.png
-  - 6557a7c7081d98c7211fbadf6a2d0717.png
-  - b0dac4259da34554724d3a743f91b759.png
+  - 9969c720185c67d4344bf3e400c970cf.png
+  - f84f1fea72a17781117a0071c26c2084.png
+  - 7fa8d45062245158eba84ccb44a1d7e9.png
 name: z2qa7xJnpqbLZ1jrnhCx9Z4vsLFopR1pe9M9U
 components:
   - title: Static Demo

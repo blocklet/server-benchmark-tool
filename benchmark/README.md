@@ -19,7 +19,7 @@
 ## Use benchmark
 
 ```bash
-$ npx @blocklet/server-benchmark@beta -c 200 -t 30 -o http://your-app --login-token <loginToken> <url>
+$ npx @blocklet/server-benchmark -c 200 -t 30 -o http://your-app --login-token <loginToken> <url>
 ````
 
 ## FAQ
