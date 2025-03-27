@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "",
   "main": "benchmark.js",
-  "bin": "./benchmark.js",
+  "bin": {
+    "server-benchmark": "benchmark.js"
+  },
   "scripts": {
     "blocklet-benchmark": "node benchmark.js"
   },
