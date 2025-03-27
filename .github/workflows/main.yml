@@ -13,26 +13,22 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
-
-      - name: Set pnpm cache
-        uses: pnpm/action-setup@v2
-        with:
-          version: 9
+        uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
-      - name: Blocklet workflow
+      - name: Upload to test store
         uses: blocklet/action-workflow@v1
+        env:
+          COMPONENT_STORE_URL: ${{ secrets.STORE_ENDPOINT_TEST }}
         with:
-          skip-upload: true
-          skip-deploy: false
-          bundle-command: pnpm bundle
-          store-endpoint: ${{ secrets.STORE_ENDPOINT }}
-          store-access-token: ${{ secrets.STORE_ACCESS_TOKEN }}
-          server-endpoint: ${{ secrets.SERVER_ENDPOINT }}
-          server-access-key: ${{ secrets.SERVER_ACCESS_KEY }}
-          server-access-secret: ${{ secrets.SERVER_ACCESS_SECRET }}
+          deps-server-version: beta
+          skip-deps: false
+          skip-upload: false
+          skip-deploy: true
+          skip-release: true
+          bundle-command: npm run bundle
+          store-endpoint: ${{ secrets.STORE_ENDPOINT_TEST }}
+          store-access-token: ${{ secrets.STORE_ACCESS_TOKEN_TEST }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
