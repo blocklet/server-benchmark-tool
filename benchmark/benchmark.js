@@ -194,7 +194,7 @@ program
   .option(
     '--mode <mode>',
     'request mode: "rps" for fixed rate, "concurrent" for constant concurrency, or "all" for both modes (each with half total time)',
-    'concurrent'
+    'all'
   )
   .action(async (options) => {
     let { origin } = options;
