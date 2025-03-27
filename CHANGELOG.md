@@ -1,3 +1,7 @@
+## 1.0.5 (2025-3-27)
+
+- Update readme
+
 ## 1.0.4 (2025-3-27)
 
 - Use new benchmark tools
