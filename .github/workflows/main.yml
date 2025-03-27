@@ -31,4 +31,4 @@ jobs:
           bundle-command: npm run bundle
           store-endpoint: ${{ secrets.STORE_ENDPOINT_TEST }}
           store-access-token: ${{ secrets.STORE_ACCESS_TOKEN_TEST }}
-          slack-webhook: ${{ secrets.SLACK_WEBHOOK }
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
