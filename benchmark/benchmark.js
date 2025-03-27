@@ -167,13 +167,13 @@ const program = new Command();
 program
   .version(version)
   .option('-o, --origin <string>', 'origin')
-  .option('-c, --concurrency <number>', '每秒发起请求数，默认 100', parseInt, 10)
-  .option('-t, --timelimit <number>', '测试时长（秒）', parseInt, 10)
-  .option('--login-token [string]', '登录 token')
+  .option('-c, --concurrency <number>', 'pre-request concurrency, default 100', parseInt, 10)
+  .option('-t, --timelimit <number>', 'test duration, default 10', parseInt, 10)
+  .option('--login-token [string]', 'login token')
   .option('--user-did [string]', 'user did')
   .option('--team-did [string]', 'team did')
-  .option('--body [string]', '请求体（字符串形式）')
-  .option('--format [string]', '输出格式，可选 "row", "json", "table"，默认 table', 'table')
+  .option('--body [string]', 'request body (string)')
+  .option('--format [string]', 'output format, optional "row", "json", "table", default "table"', 'table')
   .action(async (options) => {
     let { origin } = options;
     console.log(bold(`Benchmark v${version}\n`));
@@ -185,7 +185,6 @@ program
     origin = new URL(origin).origin;
     console.log(`${bold('Benchmarking')} ${cyan(origin)}\n`);
 
-    // 定义测试的 endpoints 列表，保持和原先类似
     const list = [
       { name: '/api/date', api: '/api/date', format: 'text' },
       {
@@ -280,7 +279,6 @@ program
       results.push(res);
     }
 
-    // 构造输出表格
     const tableHead = [
       'Case',
       'Concurrency',
@@ -315,7 +313,6 @@ program
     });
 
     console.log(`\n${bold('-----------------')}\n`);
-    // 获取系统信息和服务器版本（原逻辑保持不变）
     const sysInfo = await getSysInfo();
     const serverVersion = await getServerVersion(origin);
     console.log(cyan('Server Version:'), serverVersion);

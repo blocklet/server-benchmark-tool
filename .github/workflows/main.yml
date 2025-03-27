@@ -15,18 +15,20 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Set yarn cache
-        uses: c-hive/gha-yarn-cache@v2
+      - name: Set pnpm cache
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
 
       - name: Install dependencies
-        run: yarn
+        run: pnpm install
 
       - name: Blocklet workflow
         uses: blocklet/action-workflow@v1
         with:
           skip-upload: true
-          skip-deploy: true
-          bundle-command: yarn bundle
+          skip-deploy: false
+          bundle-command: pnpm bundle
           store-endpoint: ${{ secrets.STORE_ENDPOINT }}
           store-access-token: ${{ secrets.STORE_ACCESS_TOKEN }}
           server-endpoint: ${{ secrets.SERVER_ENDPOINT }}

@@ -1,12 +1,18 @@
 {
-  "name": "benchmark-server",
-  "version": "1.0.0",
+  "name": "@blocklet/benchmark",
+  "version": "0.0.1",
   "description": "",
   "main": "benchmark.js",
-  "bin": "./benchmark.js",
-  "scripts": {
-    "benchmark": "node benchmark.js"
+  "bin": {
+    "blocklet-benchmark": "./benchmark.js"
   },
+  "scripts": {
+    "blocklet-benchmark": "node benchmark.js"
+  },
+  "files": [
+    "benchmark.js",
+    "util"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
