@@ -1,4 +1,4 @@
-name: publish-beta-to-npm
+name: publish-to-npm
 
 on:
   push:
