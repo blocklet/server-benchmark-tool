@@ -1,4 +1,4 @@
-version: 1.0.3
+version: 1.0.4
 did: z2qaAYeWTZkhb5yNHqwos6mJLLK9ykHrxehjx
 title: Server Benchmark Tool
 description: Server Benchmark Tool
@@ -27,6 +27,7 @@ interfaces:
     prefix: '*'
     port: BLOCKLET_PORT
     protocol: http
+    proxyBehavior: service
 community: ''
 documentation: ''
 homepage: ''
@@ -60,3 +61,4 @@ components:
       store: https://store.blocklet.dev
       name: static-demo-blocklet
       version: latest
+egress: true

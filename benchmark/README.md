@@ -15,12 +15,11 @@
 
 `ABT_NODE_MAX_CLUSTER_SIZE=3 blocklet server start`
 
-````
 ## Use benchmark
 
 ```bash
-$ npx @blocklet/server-benchmark -c 200 -t 30 -o http://your-app --login-token <loginToken> <url>
-````
+$ npx @blocklet/server-benchmark -c 200 -t 30 -o http://your-app-url --login-token <loginToken>
+```
 
 ## FAQ
 

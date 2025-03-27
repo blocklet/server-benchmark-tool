@@ -1,39 +1,29 @@
-# Component for blocklet server benchmark
+# Benchmark Tool
 
-## Web API
+## Benchmark Server
 
-- /api/date
-- /api/date?timeout=1000
-- /api/user/{did}?return=0 # wrap BlockletSDK:getUser
-- /api/users&return=0 # wrap BlockletSDK:getUsers
-- /api/users?search=xxx&return=0 # wrap BlockletSDK:getUsers
+## How to use
 
-## More APIs
+1. Prepare: start a server
+2. Install https://test.store.blocklet.dev/blocklets/z2qaAYeWTZkhb5yNHqwos6mJLLK9ykHrxehjx
+3. Config "Invited only" for Static Demo component in Blocklet Dashboard
+4. Save login_token from cookie in browser
+5. Save any User Did from Blocklet Dashboard
+6. Start Benchmark
 
-#### blocklet
+## Server use cluster
 
-- /.well-known/service/api/did/login/auth
-- /.well-known/service/api/did/login/token
-- /.well-known/service/api/did/session
-- /.well-known/service/api/user-session
-- /.well-known/service/openembed.json
-- /.blocklet/proxy/\*
-- `/__blocklet__.js`
+`ABT_NODE_MAX_CLUSTER_SIZE=3 blocklet server start`
 
-#### Profile
+## Use benchmark
 
-- /.well-known/service/api/gql - getNotifications
-- /.well-known/service/api/gql - getNotificationComponents
+```bash
+$ npx @blocklet/server-benchmark -c 200 -t 30 -o http://your-app-url --login-token <loginToken>
+```
 
-#### 登录过程，钱包会请求其他站点
+## FAQ
 
-- https://www.didspaces.com/app/api/user/z1kNtEtTQWtLuuRTTwVtd8ZEKdMjVe8pvUz
-- https://www.didspaces.com/app/api/space/zNKuDNh3cUp94BCE5VpvA6Zg4pYUCztv8hng/app/z1cTHXPbkGwVZevuZvLNkUrnHXnBmNEo57t/profile/list
-- https://main.abtnetwork.io/api/?consistentTokens=true
-- https://www.didspaces.com/app/api/space/zNKuDNh3cUp94BCE5VpvA6Zg4pYUCztv8hng/app/z1cTHXPbkGwVZevuZvLNkUrnHXnBmNEo57t/contact/list
-- https://main.abtnetwork.io/api/?consistentTokens=true (这个会长时间轮询)
-- 并且会遍历基本上我们所有站点，但是大部分是 head 请求
+How to access blocklet by local domain?
 
-#### 测试启动的时候，开启 cluster
-
-`ABT_NODE_MAX_CLUSTER_SIZE=4 bn server start`
+1. Config `server.benchmark.local` to `127.0.0.1` in `/etc/hosts`
+2. Add `server.benchmark.local` from Blocklet Dashboard - Configuration
