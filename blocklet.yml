@@ -17,9 +17,9 @@ specVersion: 1.2.8
 logo: logo.png
 files:
   - dist
-  - logo.png
   - screenshots
   - api/hooks/pre-start.js
+  - logo.png
 interfaces:
   - type: web
     name: publicUrl
@@ -48,7 +48,10 @@ capabilities:
   clusterMode: false
   component: true
   navigation: true
-screenshots: []
+screenshots:
+  - 63a9bad266fc74fb0c47ff8a94c7d5d9.png
+  - 6557a7c7081d98c7211fbadf6a2d0717.png
+  - b0dac4259da34554724d3a743f91b759.png
 name: z2qa7xJnpqbLZ1jrnhCx9Z4vsLFopR1pe9M9U
 components:
   - title: Static Demo

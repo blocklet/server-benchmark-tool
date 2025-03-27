@@ -13,6 +13,9 @@
     "benchmark.js",
     "util"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
