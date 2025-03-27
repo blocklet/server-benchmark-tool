@@ -26,8 +26,7 @@ jobs:
 
       - name: Publish to NPM
         run: |
-          node scripts/update-beta-package-version.js 
           cat benchmark/package.json | grep version
-          cd benchmark && npm publish --tag beta
+          cd benchmark && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
