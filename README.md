@@ -16,8 +16,24 @@
 
 ## Use benchmark
 
+Use concurrent mode and require/s mode test(default):
+
 ```bash
-$ npx @blocklet/server-benchmark -c 300 -t 36 -o https://your-app-url --user-did your-did --team-did the-installed-app-did --login-token your-login-token
+$ npx @blocklet/server-benchmark -c 300 -t 36 --mode all con -o https://your-app-url --user-did your-did --team-did the-installed-app-did --login-token your-login-token
+```
+
+Use concurrent mode
+
+```bash
+$ npx @blocklet/server-benchmark -c 300 -t 36 --mode concurrent -o https://your-app-url --user-did your-did --team-did the-installed-app-did --login-token your-login-token
+```
+
+Use require/s mode
+
+```
+$ npx @blocklet/server-benchmark -c 300 -t 36 --mode rps -o https://your-app-url --user-did your-did --team-did the-installed-app-did --login-token your-login-token
+```
+
 ```
 
 ## FAQ
@@ -26,3 +42,4 @@ How to access blocklet by local domain?
 
 1. Config `server.benchmark.local` to `127.0.0.1` in `/etc/hosts`
 2. Add `server.benchmark.local` from Blocklet Dashboard - Configuration
+```

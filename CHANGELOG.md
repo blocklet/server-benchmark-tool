@@ -1,3 +1,7 @@
+## 1.0.7 (2025-3-27)
+
+- Add RPS and Concurrent test mode
+
 ## 1.0.6 (2025-3-27)
 
 - Update readme
