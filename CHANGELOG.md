@@ -1,3 +1,7 @@
+## 1.0.8 (2025-4-3)
+
+- Add only test match url
+
 ## 1.0.7 (2025-3-27)
 
 - Add RPS and Concurrent test mode
