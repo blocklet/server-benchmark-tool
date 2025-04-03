@@ -22,16 +22,22 @@ Use concurrent mode and require/s mode test(default):
 $ npx @blocklet/server-benchmark -c 300 -t 36 --mode all con -o https://your-app-url --user-did your-did --team-did the-installed-app-did --login-token your-login-token
 ```
 
-Use concurrent mode
+Use concurrent mode:
 
 ```bash
 $ npx @blocklet/server-benchmark -c 300 -t 36 --mode concurrent -o https://your-app-url --user-did your-did --team-did the-installed-app-did --login-token your-login-token
 ```
 
-Use require/s mode
+Use require/s mode:
 
 ```
 $ npx @blocklet/server-benchmark -c 300 -t 36 --mode rps -o https://your-app-url --user-did your-did --team-did the-installed-app-did --login-token your-login-token
+```
+
+Only run some url, use `--match`:
+
+```
+$ npx @blocklet/server-benchmark -c 300 -t 36 --mode rps -o https://your-app-url --match /.well-known/service/api/user-session --user-did your-did --team-did the-installed-app-did --login-token your-login-token
 ```
 
 ```

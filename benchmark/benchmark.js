@@ -187,6 +187,7 @@ program
   .option('-t, --timelimit <number>', 'test duration, default 10', parseInt, 10)
   .option('--login-token [string]', 'login token')
   .option('--user-did [string]', 'user did')
+  .option('--match [string]', 'only test endpoints matching this substring')
   .option('--team-did [string]', 'team did')
   .option('--body [string]', 'request body (string)')
   .option('--format [string]', 'output format, optional "row", "json", "table", default "table"', 'table')
@@ -274,7 +275,12 @@ program
           userDid: options.userDid,
         },
       },
-    ].filter(Boolean);
+    ].filter((item) => {
+      if (options.match) {
+        return item.name.includes(options.match);
+      }
+      return !!item;
+    });
 
     if (options.mode === 'all') {
       // 当 mode 为 all 时，两种模式各测试一半时间
