@@ -222,7 +222,7 @@ program
         api: '/.well-known/service/api/did/session',
       },
       {
-        name: '/.well-known/service/api/did/session (with session)',
+        name: '/.well-known/service/api/did/session:with-session',
         api: '/.well-known/service/api/did/session',
         loginToken: options.loginToken,
       },
@@ -236,7 +236,7 @@ program
         api: `/.well-known/service/api/user/privacy/config?did=${options.userDid}`,
         loginToken: options.loginToken,
       },
-      { name: '/invited-only (without session)', api: '/invited-only', format: 'text' },
+      { name: '/invited-only:without-session', api: '/invited-only', format: 'text' },
       {
         name: `/api/user/${options.userDid}`,
         api: `/api/user/${options.userDid}?return=1`,
@@ -256,7 +256,7 @@ program
         loginToken: options.loginToken,
       },
       {
-        name: '/.well-known/service/api/gql (getNotifications)',
+        name: '/.well-known/service/api/gql:getNotifications',
         api: '/.well-known/service/api/gql',
         loginToken: options.loginToken,
         gqlFn: 'getNotifications',
@@ -266,7 +266,7 @@ program
         },
       },
       {
-        name: '/.well-known/service/api/gql (getNotificationComponents)',
+        name: '/.well-known/service/api/gql:getNotificationComponents',
         api: '/.well-known/service/api/gql',
         gqlFn: 'getNotificationComponents',
         loginToken: options.loginToken,
