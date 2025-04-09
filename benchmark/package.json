@@ -1,6 +1,6 @@
 {
   "name": "@blocklet/server-benchmark",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "",
   "main": "benchmark.js",
   "bin": {
