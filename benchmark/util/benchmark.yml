@@ -11,8 +11,8 @@ data:
   userDid: 'your-user-did'
   teamDid: 'your-team-did'
   loginToken: 'your-login-token'
-# logBody is the logBody of the benchmark
-logBody: false
+# logResponse is the logBody of the benchmark
+logResponse: false
 # logError is the logError of the benchmark
 logError: false
 # apis is the apis of the benchmark
