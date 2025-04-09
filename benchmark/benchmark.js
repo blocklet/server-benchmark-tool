@@ -181,6 +181,13 @@ program
     if (config.data?.loginToken === 'your-login-token') {
       console.error('You not update the loginToken in benchmark.yml');
     }
+    if (config.data?.teamDid.indexOf('did:abt:') !== -1) {
+      config.data.teamDid = config.data.teamDid.replace('did:abt:', '');
+    }
+    if (config.data?.userDid.indexOf('did:abt:') !== -1) {
+      config.data.userDid = config.data.userDid.replace('did:abt:', '');
+    }
+
     const { origin } = new URL(config.origin);
     let list = config.apis.filter((item) => item && !item.skip);
     const onlyList = config.apis.filter((item) => item.only);
