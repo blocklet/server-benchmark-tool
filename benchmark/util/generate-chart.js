@@ -27,7 +27,7 @@ async function generateChart(data, outputFile = 'output.png') {
   }));
 
   const width = 1200;
-  const height = 600;
+  const height = 800;
   const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height, backgroundColor: 'white' });
 
   const configuration = {
