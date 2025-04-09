@@ -26,7 +26,6 @@
     "chartjs-node-canvas": "^5.0.0",
     "cli-table-redemption": "^1.0.1",
     "commander": "^10.0.1",
-    "strip-ansi": "^7.1.0",
     "dotenv": "^16.4.7",
     "openai": "^4.93.0",
     "systeminformation": "^5.17.12",

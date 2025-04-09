@@ -1,5 +1,6 @@
 const fs = require('fs');
 const util = require('util');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const stripAnsi = require('strip-ansi');
 
 const logFile = fs.createWriteStream('benchmark.log', { flags: 'a' }); // 'a' 表示追加写入

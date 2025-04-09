@@ -1,0 +1,1183 @@
+benchmark.log cleaned
+ramp: 50 rampTims: 6
+Benchmarking https://bbqathtgbx72pp3ee7zbgbvujqycl4er6ga2cxrtafq.did.abtnet.io:8443
+
+
+--- Testing endpoints in mode concurrent ---
+
+Testing /discuss-kit/api/discussions/pinned
+Testing /discuss-kit/api/discussions?page=1&size=20
+Testing /discuss-kit/api/chat/chats/unread
+Testing /discuss-kit/api/boards
+Testing /discuss-kit/api/chat/chats
+Testing /discuss-kit/api/labels
+Testing /media-kit/api/uploader/status
+Testing /api/posts/my?status=draft&type=discussion&page=1&size=0
+Testing /discuss-kit/api/passports
+
+-----------------
+
+Mode: concurrent - Concurrent Mode: Keeps concurrency level steady.
+┌──────────────────────────────────────────────────────────┬─────────────┬──────────┬─────────┬──────┬──────┬───────┬───────┬───────┬───────┬───────────┐
+│ Case                                                     │ Concurrency │ Requests │ Success │ RPS  │ Min  │ 50%   │ 90%   │ 99%   │ Max   │ Test Time │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼──────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/discussions/pinned                      │ 50          │ 479      │ 100.00% │ 230  │ 79ms │ 213ms │ 246ms │ 333ms │ 348ms │ 2.08s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼──────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/discussions?page=1&size=20              │ 50          │ 897      │ 100.00% │ 429  │ 1ms  │ 204ms │ 232ms │ 267ms │ 278ms │ 2.09s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼──────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/chat/chats/unread                       │ 50          │ 1741     │ 100.00% │ 861  │ 19ms │ 54ms  │ 84ms  │ 132ms │ 159ms │ 2.02s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼──────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/boards                                  │ 50          │ 1408     │ 100.00% │ 693  │ 17ms │ 74ms  │ 91ms  │ 125ms │ 135ms │ 2.03s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼──────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/chat/chats                              │ 50          │ 511      │ 100.00% │ 247  │ 75ms │ 203ms │ 232ms │ 275ms │ 286ms │ 2.07s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼──────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/labels                                  │ 50          │ 1225     │ 100.00% │ 601  │ 29ms │ 85ms  │ 101ms │ 123ms │ 143ms │ 2.04s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼──────┼───────┼───────┼───────┼───────┼───────────┤
+│ /media-kit/api/uploader/status                           │ 50          │ 3644     │ 100.00% │ 1803 │ 5ms  │ 27ms  │ 38ms  │ 54ms  │ 65ms  │ 2.02s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼──────┼───────┼───────┼───────┼───────┼───────────┤
+│ /api/posts/my?status=draft&type=discussion&page=1&size=0 │ 50          │ 2170     │ 0.00%   │ 0    │ 7ms  │ 42ms  │ 78ms  │ 135ms │ 166ms │ 2.04s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼──────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/passports                               │ 50          │ 982      │ 100.00% │ 484  │ 22ms │ 102ms │ 146ms │ 184ms │ 220ms │ 2.03s     │
+└──────────────────────────────────────────────────────────┴─────────────┴──────────┴─────────┴──────┴──────┴───────┴───────┴───────┴───────┴───────────┘
+Benchmarking https://bbqathtgbx72pp3ee7zbgbvujqycl4er6ga2cxrtafq.did.abtnet.io:8443
+
+
+--- Testing endpoints in mode concurrent ---
+
+Testing /discuss-kit/api/discussions/pinned
+Testing /discuss-kit/api/discussions?page=1&size=20
+Testing /discuss-kit/api/chat/chats/unread
+Testing /discuss-kit/api/boards
+Testing /discuss-kit/api/chat/chats
+Testing /discuss-kit/api/labels
+Testing /media-kit/api/uploader/status
+Testing /api/posts/my?status=draft&type=discussion&page=1&size=0
+Testing /discuss-kit/api/passports
+
+-----------------
+
+Mode: concurrent - Concurrent Mode: Keeps concurrency level steady.
+┌──────────────────────────────────────────────────────────┬─────────────┬──────────┬─────────┬──────┬─────────┬───────┬───────┬───────┬───────┬───────────┐
+│ Case                                                     │ Concurrency │ Requests │ Success │ RPS  │ Min     │ 50%   │ 90%   │ 99%   │ Max   │ Test Time │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/discussions/pinned                      │ 100         │ 551      │ 100.00% │ 258  │ 72ms    │ 390ms │ 442ms │ 516ms │ 542ms │ 2.13s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/discussions?page=1&size=20              │ 100         │ 543      │ 100.00% │ 249  │ 117ms   │ 407ms │ 455ms │ 527ms │ 541ms │ 2.18s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/chat/chats/unread                       │ 100         │ 1781     │ 100.00% │ 870  │ 19ms    │ 109ms │ 161ms │ 218ms │ 249ms │ 2.05s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/boards                                  │ 100         │ 1445     │ 100.00% │ 695  │ 24ms    │ 148ms │ 179ms │ 237ms │ 270ms │ 2.08s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/chat/chats                              │ 100         │ 534      │ 100.00% │ 248  │ 40ms    │ 401ms │ 474ms │ 539ms │ 584ms │ 2.16s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/labels                                  │ 100         │ 1215     │ 100.00% │ 585  │ 14ms    │ 177ms │ 205ms │ 263ms │ 296ms │ 2.08s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼───────┼───────┼───────┼───────────┤
+│ /media-kit/api/uploader/status                           │ 100         │ 3823     │ 100.00% │ 1863 │ 15ms    │ 51ms  │ 68ms  │ 84ms  │ 106ms │ 2.05s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼───────┼───────┼───────┼───────────┤
+│ /api/posts/my?status=draft&type=discussion&page=1&size=0 │ 100         │ 4174     │ 0.00%   │ 0    │ -1559ms │ 73ms  │ 163ms │ 238ms │ 263ms │ 2.08s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/passports                               │ 100         │ 1177     │ 100.00% │ 569  │ 19ms    │ 176ms │ 246ms │ 315ms │ 368ms │ 2.07s     │
+└──────────────────────────────────────────────────────────┴─────────────┴──────────┴─────────┴──────┴─────────┴───────┴───────┴───────┴───────┴───────────┘
+Benchmarking https://bbqathtgbx72pp3ee7zbgbvujqycl4er6ga2cxrtafq.did.abtnet.io:8443
+
+
+--- Testing endpoints in mode concurrent ---
+
+Testing /discuss-kit/api/discussions/pinned
+Testing /discuss-kit/api/discussions?page=1&size=20
+Testing /discuss-kit/api/chat/chats/unread
+Testing /discuss-kit/api/boards
+Testing /discuss-kit/api/chat/chats
+Testing /discuss-kit/api/labels
+Testing /media-kit/api/uploader/status
+Testing /api/posts/my?status=draft&type=discussion&page=1&size=0
+Testing /discuss-kit/api/passports
+
+-----------------
+
+Mode: concurrent - Concurrent Mode: Keeps concurrency level steady.
+┌──────────────────────────────────────────────────────────┬─────────────┬──────────┬─────────┬──────┬───────┬───────┬───────┬───────┬───────┬───────────┐
+│ Case                                                     │ Concurrency │ Requests │ Success │ RPS  │ Min   │ 50%   │ 90%   │ 99%   │ Max   │ Test Time │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/discussions/pinned                      │ 150         │ 613      │ 100.00% │ 271  │ 164ms │ 553ms │ 651ms │ 749ms │ 756ms │ 2.26s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/discussions?page=1&size=20              │ 150         │ 602      │ 100.00% │ 262  │ 190ms │ 587ms │ 655ms │ 741ms │ 750ms │ 2.29s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/chat/chats/unread                       │ 150         │ 1934     │ 100.00% │ 900  │ 14ms  │ 161ms │ 228ms │ 332ms │ 350ms │ 2.15s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/boards                                  │ 150         │ 1569     │ 100.00% │ 749  │ 17ms  │ 204ms │ 251ms │ 310ms │ 336ms │ 2.10s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/chat/chats                              │ 150         │ 551      │ 100.00% │ 246  │ 205ms │ 600ms │ 748ms │ 843ms │ 855ms │ 2.24s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/labels                                  │ 150         │ 1257     │ 100.00% │ 603  │ 27ms  │ 254ms │ 300ms │ 404ms │ 444ms │ 2.08s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼───────┼───────┼───────┼───────────┤
+│ /media-kit/api/uploader/status                           │ 150         │ 3904     │ 100.00% │ 1881 │ 7ms   │ 76ms  │ 102ms │ 126ms │ 135ms │ 2.08s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼───────┼───────┼───────┼───────────┤
+│ /api/posts/my?status=draft&type=discussion&page=1&size=0 │ 150         │ 2322     │ 0.00%   │ 0    │ 16ms  │ 127ms │ 207ms │ 280ms │ 311ms │ 2.09s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼───────┼───────┼───────┼───────────┤
+│ /discuss-kit/api/passports                               │ 150         │ 1244     │ 100.00% │ 592  │ 24ms  │ 263ms │ 350ms │ 502ms │ 515ms │ 2.10s     │
+└──────────────────────────────────────────────────────────┴─────────────┴──────────┴─────────┴──────┴───────┴───────┴───────┴───────┴───────┴───────────┘
+Benchmarking https://bbqathtgbx72pp3ee7zbgbvujqycl4er6ga2cxrtafq.did.abtnet.io:8443
+
+
+--- Testing endpoints in mode concurrent ---
+
+Testing /discuss-kit/api/discussions/pinned
+Testing /discuss-kit/api/discussions?page=1&size=20
+Testing /discuss-kit/api/chat/chats/unread
+Testing /discuss-kit/api/boards
+Testing /discuss-kit/api/chat/chats
+Testing /discuss-kit/api/labels
+Testing /media-kit/api/uploader/status
+Testing /api/posts/my?status=draft&type=discussion&page=1&size=0
+Testing /discuss-kit/api/passports
+
+-----------------
+
+Mode: concurrent - Concurrent Mode: Keeps concurrency level steady.
+┌──────────────────────────────────────────────────────────┬─────────────┬──────────┬─────────┬──────┬───────┬───────┬────────┬────────┬────────┬───────────┐
+│ Case                                                     │ Concurrency │ Requests │ Success │ RPS  │ Min   │ 50%   │ 90%    │ 99%    │ Max    │ Test Time │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/discussions/pinned                      │ 200         │ 637      │ 100.00% │ 197  │ 48ms  │ 618ms │ 807ms  │ 3213ms │ 3222ms │ 3.24s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/discussions?page=1&size=20              │ 200         │ 611      │ 100.00% │ 253  │ 196ms │ 776ms │ 925ms  │ 1040ms │ 1074ms │ 2.41s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/chat/chats/unread                       │ 200         │ 3428     │ 100.00% │ 1603 │ 1ms   │ 208ms │ 283ms  │ 444ms  │ 491ms  │ 2.14s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/boards                                  │ 200         │ 1547     │ 100.00% │ 725  │ 18ms  │ 275ms │ 354ms  │ 445ms  │ 471ms  │ 2.13s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/chat/chats                              │ 200         │ 592      │ 100.00% │ 244  │ 45ms  │ 798ms │ 1013ms │ 1131ms │ 1150ms │ 2.42s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/labels                                  │ 200         │ 1248     │ 100.00% │ 571  │ 15ms  │ 367ms │ 418ms  │ 593ms  │ 622ms  │ 2.19s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼────────┼────────┼────────┼───────────┤
+│ /media-kit/api/uploader/status                           │ 200         │ 3894     │ 100.00% │ 1853 │ 10ms  │ 107ms │ 123ms  │ 131ms  │ 145ms  │ 2.10s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼────────┼────────┼────────┼───────────┤
+│ /api/posts/my?status=draft&type=discussion&page=1&size=0 │ 200         │ 1988     │ 0.00%   │ 0    │ 16ms  │ 200ms │ 316ms  │ 409ms  │ 460ms  │ 2.12s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼───────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/passports                               │ 200         │ 1242     │ 100.00% │ 586  │ 26ms  │ 352ms │ 501ms  │ 741ms  │ 801ms  │ 2.12s     │
+└──────────────────────────────────────────────────────────┴─────────────┴──────────┴─────────┴──────┴───────┴───────┴────────┴────────┴────────┴───────────┘
+Benchmarking https://bbqathtgbx72pp3ee7zbgbvujqycl4er6ga2cxrtafq.did.abtnet.io:8443
+
+
+--- Testing endpoints in mode concurrent ---
+
+Testing /discuss-kit/api/discussions/pinned
+Testing /discuss-kit/api/discussions?page=1&size=20
+Testing /discuss-kit/api/chat/chats/unread
+Testing /discuss-kit/api/boards
+Testing /discuss-kit/api/chat/chats
+Testing /discuss-kit/api/labels
+Testing /media-kit/api/uploader/status
+Testing /api/posts/my?status=draft&type=discussion&page=1&size=0
+Testing /discuss-kit/api/passports
+
+-----------------
+
+Mode: concurrent - Concurrent Mode: Keeps concurrency level steady.
+┌──────────────────────────────────────────────────────────┬─────────────┬──────────┬─────────┬──────┬─────────┬───────┬────────┬────────┬────────┬───────────┐
+│ Case                                                     │ Concurrency │ Requests │ Success │ RPS  │ Min     │ 50%   │ 90%    │ 99%    │ Max    │ Test Time │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/discussions/pinned                      │ 250         │ 599      │ 100.00% │ 257  │ 95ms    │ 948ms │ 1192ms │ 1323ms │ 1341ms │ 2.33s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/discussions?page=1&size=20              │ 250         │ 599      │ 100.00% │ 257  │ 101ms   │ 932ms │ 1219ms │ 1349ms │ 1365ms │ 2.33s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/chat/chats/unread                       │ 250         │ 1820     │ 100.00% │ 864  │ 18ms    │ 276ms │ 441ms  │ 569ms  │ 603ms  │ 2.11s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/boards                                  │ 250         │ 1543     │ 100.00% │ 708  │ 17ms    │ 362ms │ 424ms  │ 585ms  │ 627ms  │ 2.18s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/chat/chats                              │ 250         │ 572      │ 100.00% │ 245  │ 44ms    │ 984ms │ 1319ms │ 1418ms │ 1438ms │ 2.34s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/labels                                  │ 250         │ 1299     │ 100.00% │ 594  │ 22ms    │ 438ms │ 528ms  │ 673ms  │ 692ms  │ 2.19s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼────────┼────────┼────────┼───────────┤
+│ /media-kit/api/uploader/status                           │ 250         │ 4026     │ 100.00% │ 1905 │ 12ms    │ 130ms │ 148ms  │ 170ms  │ 180ms  │ 2.11s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼────────┼────────┼────────┼───────────┤
+│ /api/posts/my?status=draft&type=discussion&page=1&size=0 │ 250         │ 4341     │ 0.00%   │ 0    │ -1529ms │ 198ms │ 310ms  │ 393ms  │ 433ms  │ 2.16s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼─────────┼───────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/passports                               │ 250         │ 1307     │ 100.00% │ 603  │ 46ms    │ 438ms │ 616ms  │ 801ms  │ 888ms  │ 2.17s     │
+└──────────────────────────────────────────────────────────┴─────────────┴──────────┴─────────┴──────┴─────────┴───────┴────────┴────────┴────────┴───────────┘
+Benchmarking https://bbqathtgbx72pp3ee7zbgbvujqycl4er6ga2cxrtafq.did.abtnet.io:8443
+
+
+--- Testing endpoints in mode concurrent ---
+
+Testing /discuss-kit/api/discussions/pinned
+Testing /discuss-kit/api/discussions?page=1&size=20
+Testing /discuss-kit/api/chat/chats/unread
+Testing /discuss-kit/api/boards
+Testing /discuss-kit/api/chat/chats
+Testing /discuss-kit/api/labels
+Testing /media-kit/api/uploader/status
+Testing /api/posts/my?status=draft&type=discussion&page=1&size=0
+Testing /discuss-kit/api/passports
+
+-----------------
+
+Mode: concurrent - Concurrent Mode: Keeps concurrency level steady.
+┌──────────────────────────────────────────────────────────┬─────────────┬──────────┬─────────┬──────┬───────┬────────┬────────┬────────┬────────┬───────────┐
+│ Case                                                     │ Concurrency │ Requests │ Success │ RPS  │ Min   │ 50%    │ 90%    │ 99%    │ Max    │ Test Time │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼────────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/discussions/pinned                      │ 300         │ 640      │ 100.00% │ 275  │ 61ms  │ 1057ms │ 1473ms │ 1603ms │ 1614ms │ 2.33s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼────────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/discussions?page=1&size=20              │ 300         │ 627      │ 100.00% │ 269  │ 145ms │ 1033ms │ 1428ms │ 1529ms │ 1546ms │ 2.33s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼────────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/chat/chats/unread                       │ 300         │ 1965     │ 100.00% │ 895  │ 17ms  │ 314ms  │ 487ms  │ 691ms  │ 721ms  │ 2.20s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼────────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/boards                                  │ 300         │ 1653     │ 100.00% │ 728  │ 16ms  │ 410ms  │ 515ms  │ 709ms  │ 758ms  │ 2.27s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼────────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/chat/chats                              │ 300         │ 613      │ 100.00% │ 246  │ 73ms  │ 1126ms │ 1583ms │ 1685ms │ 1702ms │ 2.49s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼────────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/labels                                  │ 300         │ 1293     │ 100.00% │ 578  │ 17ms  │ 556ms  │ 708ms  │ 866ms  │ 908ms  │ 2.24s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼────────┼────────┼────────┼────────┼───────────┤
+│ /media-kit/api/uploader/status                           │ 300         │ 3807     │ 100.00% │ 1777 │ 15ms  │ 162ms  │ 198ms  │ 215ms  │ 230ms  │ 2.14s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼────────┼────────┼────────┼────────┼───────────┤
+│ /api/posts/my?status=draft&type=discussion&page=1&size=0 │ 300         │ 2309     │ 0.00%   │ 0    │ 19ms  │ 262ms  │ 421ms  │ 501ms  │ 534ms  │ 2.18s     │
+├──────────────────────────────────────────────────────────┼─────────────┼──────────┼─────────┼──────┼───────┼────────┼────────┼────────┼────────┼───────────┤
+│ /discuss-kit/api/passports                               │ 300         │ 1287     │ 100.00% │ 590  │ 34ms  │ 528ms  │ 779ms  │ 983ms  │ 1061ms │ 2.18s     │
+└──────────────────────────────────────────────────────────┴─────────────┴──────────┴─────────┴──────┴───────┴────────┴────────┴────────┴────────┴───────────┘
+[
+  {
+    concurrency: 50,
+    count: 479,
+    success: 479,
+    rps: 230,
+    min: 79,
+    t50: 213,
+    t90: 246,
+    t99: 333,
+    max: 348,
+    time: '2.08',
+    name: '/discuss-kit/api/discussions/pinned'
+  },
+  {
+    concurrency: 50,
+    count: 897,
+    success: 897,
+    rps: 429,
+    min: 1,
+    t50: 204,
+    t90: 232,
+    t99: 267,
+    max: 278,
+    time: '2.09',
+    name: '/discuss-kit/api/discussions?page=1&size=20'
+  },
+  {
+    concurrency: 50,
+    count: 1741,
+    success: 1741,
+    rps: 861,
+    min: 19,
+    t50: 54,
+    t90: 84,
+    t99: 132,
+    max: 159,
+    time: '2.02',
+    name: '/discuss-kit/api/chat/chats/unread'
+  },
+  {
+    concurrency: 50,
+    count: 1408,
+    success: 1408,
+    rps: 693,
+    min: 17,
+    t50: 74,
+    t90: 91,
+    t99: 125,
+    max: 135,
+    time: '2.03',
+    name: '/discuss-kit/api/boards'
+  },
+  {
+    concurrency: 50,
+    count: 511,
+    success: 511,
+    rps: 247,
+    min: 75,
+    t50: 203,
+    t90: 232,
+    t99: 275,
+    max: 286,
+    time: '2.07',
+    name: '/discuss-kit/api/chat/chats'
+  },
+  {
+    concurrency: 50,
+    count: 1225,
+    success: 1225,
+    rps: 601,
+    min: 29,
+    t50: 85,
+    t90: 101,
+    t99: 123,
+    max: 143,
+    time: '2.04',
+    name: '/discuss-kit/api/labels'
+  },
+  {
+    concurrency: 50,
+    count: 3644,
+    success: 3644,
+    rps: 1803,
+    min: 5,
+    t50: 27,
+    t90: 38,
+    t99: 54,
+    max: 65,
+    time: '2.02',
+    name: '/media-kit/api/uploader/status'
+  },
+  {
+    concurrency: 50,
+    count: 2170,
+    success: 0,
+    rps: 0,
+    min: 7,
+    t50: 42,
+    t90: 78,
+    t99: 135,
+    max: 166,
+    time: '2.04',
+    name: '/api/posts/my?status=draft&type=discussion&page=1&size=0'
+  },
+  {
+    concurrency: 50,
+    count: 982,
+    success: 982,
+    rps: 484,
+    min: 22,
+    t50: 102,
+    t90: 146,
+    t99: 184,
+    max: 220,
+    time: '2.03',
+    name: '/discuss-kit/api/passports'
+  },
+  {
+    concurrency: 100,
+    count: 551,
+    success: 551,
+    rps: 258,
+    min: 72,
+    t50: 390,
+    t90: 442,
+    t99: 516,
+    max: 542,
+    time: '2.13',
+    name: '/discuss-kit/api/discussions/pinned'
+  },
+  {
+    concurrency: 100,
+    count: 543,
+    success: 543,
+    rps: 249,
+    min: 117,
+    t50: 407,
+    t90: 455,
+    t99: 527,
+    max: 541,
+    time: '2.18',
+    name: '/discuss-kit/api/discussions?page=1&size=20'
+  },
+  {
+    concurrency: 100,
+    count: 1781,
+    success: 1781,
+    rps: 870,
+    min: 19,
+    t50: 109,
+    t90: 161,
+    t99: 218,
+    max: 249,
+    time: '2.05',
+    name: '/discuss-kit/api/chat/chats/unread'
+  },
+  {
+    concurrency: 100,
+    count: 1445,
+    success: 1445,
+    rps: 695,
+    min: 24,
+    t50: 148,
+    t90: 179,
+    t99: 237,
+    max: 270,
+    time: '2.08',
+    name: '/discuss-kit/api/boards'
+  },
+  {
+    concurrency: 100,
+    count: 534,
+    success: 534,
+    rps: 248,
+    min: 40,
+    t50: 401,
+    t90: 474,
+    t99: 539,
+    max: 584,
+    time: '2.16',
+    name: '/discuss-kit/api/chat/chats'
+  },
+  {
+    concurrency: 100,
+    count: 1215,
+    success: 1215,
+    rps: 585,
+    min: 14,
+    t50: 177,
+    t90: 205,
+    t99: 263,
+    max: 296,
+    time: '2.08',
+    name: '/discuss-kit/api/labels'
+  },
+  {
+    concurrency: 100,
+    count: 3823,
+    success: 3823,
+    rps: 1863,
+    min: 15,
+    t50: 51,
+    t90: 68,
+    t99: 84,
+    max: 106,
+    time: '2.05',
+    name: '/media-kit/api/uploader/status'
+  },
+  {
+    concurrency: 100,
+    count: 4174,
+    success: 0,
+    rps: 0,
+    min: -1559,
+    t50: 73,
+    t90: 163,
+    t99: 238,
+    max: 263,
+    time: '2.08',
+    name: '/api/posts/my?status=draft&type=discussion&page=1&size=0'
+  },
+  {
+    concurrency: 100,
+    count: 1177,
+    success: 1177,
+    rps: 569,
+    min: 19,
+    t50: 176,
+    t90: 246,
+    t99: 315,
+    max: 368,
+    time: '2.07',
+    name: '/discuss-kit/api/passports'
+  },
+  {
+    concurrency: 150,
+    count: 613,
+    success: 613,
+    rps: 271,
+    min: 164,
+    t50: 553,
+    t90: 651,
+    t99: 749,
+    max: 756,
+    time: '2.26',
+    name: '/discuss-kit/api/discussions/pinned'
+  },
+  {
+    concurrency: 150,
+    count: 602,
+    success: 602,
+    rps: 262,
+    min: 190,
+    t50: 587,
+    t90: 655,
+    t99: 741,
+    max: 750,
+    time: '2.29',
+    name: '/discuss-kit/api/discussions?page=1&size=20'
+  },
+  {
+    concurrency: 150,
+    count: 1934,
+    success: 1934,
+    rps: 900,
+    min: 14,
+    t50: 161,
+    t90: 228,
+    t99: 332,
+    max: 350,
+    time: '2.15',
+    name: '/discuss-kit/api/chat/chats/unread'
+  },
+  {
+    concurrency: 150,
+    count: 1569,
+    success: 1569,
+    rps: 749,
+    min: 17,
+    t50: 204,
+    t90: 251,
+    t99: 310,
+    max: 336,
+    time: '2.10',
+    name: '/discuss-kit/api/boards'
+  },
+  {
+    concurrency: 150,
+    count: 551,
+    success: 551,
+    rps: 246,
+    min: 205,
+    t50: 600,
+    t90: 748,
+    t99: 843,
+    max: 855,
+    time: '2.24',
+    name: '/discuss-kit/api/chat/chats'
+  },
+  {
+    concurrency: 150,
+    count: 1257,
+    success: 1257,
+    rps: 603,
+    min: 27,
+    t50: 254,
+    t90: 300,
+    t99: 404,
+    max: 444,
+    time: '2.08',
+    name: '/discuss-kit/api/labels'
+  },
+  {
+    concurrency: 150,
+    count: 3904,
+    success: 3904,
+    rps: 1881,
+    min: 7,
+    t50: 76,
+    t90: 102,
+    t99: 126,
+    max: 135,
+    time: '2.08',
+    name: '/media-kit/api/uploader/status'
+  },
+  {
+    concurrency: 150,
+    count: 2322,
+    success: 0,
+    rps: 0,
+    min: 16,
+    t50: 127,
+    t90: 207,
+    t99: 280,
+    max: 311,
+    time: '2.09',
+    name: '/api/posts/my?status=draft&type=discussion&page=1&size=0'
+  },
+  {
+    concurrency: 150,
+    count: 1244,
+    success: 1244,
+    rps: 592,
+    min: 24,
+    t50: 263,
+    t90: 350,
+    t99: 502,
+    max: 515,
+    time: '2.10',
+    name: '/discuss-kit/api/passports'
+  },
+  {
+    concurrency: 200,
+    count: 637,
+    success: 637,
+    rps: 197,
+    min: 48,
+    t50: 618,
+    t90: 807,
+    t99: 3213,
+    max: 3222,
+    time: '3.24',
+    name: '/discuss-kit/api/discussions/pinned'
+  },
+  {
+    concurrency: 200,
+    count: 611,
+    success: 611,
+    rps: 253,
+    min: 196,
+    t50: 776,
+    t90: 925,
+    t99: 1040,
+    max: 1074,
+    time: '2.41',
+    name: '/discuss-kit/api/discussions?page=1&size=20'
+  },
+  {
+    concurrency: 200,
+    count: 3428,
+    success: 3428,
+    rps: 1603,
+    min: 1,
+    t50: 208,
+    t90: 283,
+    t99: 444,
+    max: 491,
+    time: '2.14',
+    name: '/discuss-kit/api/chat/chats/unread'
+  },
+  {
+    concurrency: 200,
+    count: 1547,
+    success: 1547,
+    rps: 725,
+    min: 18,
+    t50: 275,
+    t90: 354,
+    t99: 445,
+    max: 471,
+    time: '2.13',
+    name: '/discuss-kit/api/boards'
+  },
+  {
+    concurrency: 200,
+    count: 592,
+    success: 592,
+    rps: 244,
+    min: 45,
+    t50: 798,
+    t90: 1013,
+    t99: 1131,
+    max: 1150,
+    time: '2.42',
+    name: '/discuss-kit/api/chat/chats'
+  },
+  {
+    concurrency: 200,
+    count: 1248,
+    success: 1248,
+    rps: 571,
+    min: 15,
+    t50: 367,
+    t90: 418,
+    t99: 593,
+    max: 622,
+    time: '2.19',
+    name: '/discuss-kit/api/labels'
+  },
+  {
+    concurrency: 200,
+    count: 3894,
+    success: 3894,
+    rps: 1853,
+    min: 10,
+    t50: 107,
+    t90: 123,
+    t99: 131,
+    max: 145,
+    time: '2.10',
+    name: '/media-kit/api/uploader/status'
+  },
+  {
+    concurrency: 200,
+    count: 1988,
+    success: 0,
+    rps: 0,
+    min: 16,
+    t50: 200,
+    t90: 316,
+    t99: 409,
+    max: 460,
+    time: '2.12',
+    name: '/api/posts/my?status=draft&type=discussion&page=1&size=0'
+  },
+  {
+    concurrency: 200,
+    count: 1242,
+    success: 1242,
+    rps: 586,
+    min: 26,
+    t50: 352,
+    t90: 501,
+    t99: 741,
+    max: 801,
+    time: '2.12',
+    name: '/discuss-kit/api/passports'
+  },
+  {
+    concurrency: 250,
+    count: 599,
+    success: 599,
+    rps: 257,
+    min: 95,
+    t50: 948,
+    t90: 1192,
+    t99: 1323,
+    max: 1341,
+    time: '2.33',
+    name: '/discuss-kit/api/discussions/pinned'
+  },
+  {
+    concurrency: 250,
+    count: 599,
+    success: 599,
+    rps: 257,
+    min: 101,
+    t50: 932,
+    t90: 1219,
+    t99: 1349,
+    max: 1365,
+    time: '2.33',
+    name: '/discuss-kit/api/discussions?page=1&size=20'
+  },
+  {
+    concurrency: 250,
+    count: 1820,
+    success: 1820,
+    rps: 864,
+    min: 18,
+    t50: 276,
+    t90: 441,
+    t99: 569,
+    max: 603,
+    time: '2.11',
+    name: '/discuss-kit/api/chat/chats/unread'
+  },
+  {
+    concurrency: 250,
+    count: 1543,
+    success: 1543,
+    rps: 708,
+    min: 17,
+    t50: 362,
+    t90: 424,
+    t99: 585,
+    max: 627,
+    time: '2.18',
+    name: '/discuss-kit/api/boards'
+  },
+  {
+    concurrency: 250,
+    count: 572,
+    success: 572,
+    rps: 245,
+    min: 44,
+    t50: 984,
+    t90: 1319,
+    t99: 1418,
+    max: 1438,
+    time: '2.34',
+    name: '/discuss-kit/api/chat/chats'
+  },
+  {
+    concurrency: 250,
+    count: 1299,
+    success: 1299,
+    rps: 594,
+    min: 22,
+    t50: 438,
+    t90: 528,
+    t99: 673,
+    max: 692,
+    time: '2.19',
+    name: '/discuss-kit/api/labels'
+  },
+  {
+    concurrency: 250,
+    count: 4026,
+    success: 4026,
+    rps: 1905,
+    min: 12,
+    t50: 130,
+    t90: 148,
+    t99: 170,
+    max: 180,
+    time: '2.11',
+    name: '/media-kit/api/uploader/status'
+  },
+  {
+    concurrency: 250,
+    count: 4341,
+    success: 0,
+    rps: 0,
+    min: -1529,
+    t50: 198,
+    t90: 310,
+    t99: 393,
+    max: 433,
+    time: '2.16',
+    name: '/api/posts/my?status=draft&type=discussion&page=1&size=0'
+  },
+  {
+    concurrency: 250,
+    count: 1307,
+    success: 1307,
+    rps: 603,
+    min: 46,
+    t50: 438,
+    t90: 616,
+    t99: 801,
+    max: 888,
+    time: '2.17',
+    name: '/discuss-kit/api/passports'
+  },
+  {
+    concurrency: 300,
+    count: 640,
+    success: 640,
+    rps: 275,
+    min: 61,
+    t50: 1057,
+    t90: 1473,
+    t99: 1603,
+    max: 1614,
+    time: '2.33',
+    name: '/discuss-kit/api/discussions/pinned'
+  },
+  {
+    concurrency: 300,
+    count: 627,
+    success: 627,
+    rps: 269,
+    min: 145,
+    t50: 1033,
+    t90: 1428,
+    t99: 1529,
+    max: 1546,
+    time: '2.33',
+    name: '/discuss-kit/api/discussions?page=1&size=20'
+  },
+  {
+    concurrency: 300,
+    count: 1965,
+    success: 1965,
+    rps: 895,
+    min: 17,
+    t50: 314,
+    t90: 487,
+    t99: 691,
+    max: 721,
+    time: '2.20',
+    name: '/discuss-kit/api/chat/chats/unread'
+  },
+  {
+    concurrency: 300,
+    count: 1653,
+    success: 1653,
+    rps: 728,
+    min: 16,
+    t50: 410,
+    t90: 515,
+    t99: 709,
+    max: 758,
+    time: '2.27',
+    name: '/discuss-kit/api/boards'
+  },
+  {
+    concurrency: 300,
+    count: 613,
+    success: 613,
+    rps: 246,
+    min: 73,
+    t50: 1126,
+    t90: 1583,
+    t99: 1685,
+    max: 1702,
+    time: '2.49',
+    name: '/discuss-kit/api/chat/chats'
+  },
+  {
+    concurrency: 300,
+    count: 1293,
+    success: 1293,
+    rps: 578,
+    min: 17,
+    t50: 556,
+    t90: 708,
+    t99: 866,
+    max: 908,
+    time: '2.24',
+    name: '/discuss-kit/api/labels'
+  },
+  {
+    concurrency: 300,
+    count: 3807,
+    success: 3807,
+    rps: 1777,
+    min: 15,
+    t50: 162,
+    t90: 198,
+    t99: 215,
+    max: 230,
+    time: '2.14',
+    name: '/media-kit/api/uploader/status'
+  },
+  {
+    concurrency: 300,
+    count: 2309,
+    success: 0,
+    rps: 0,
+    min: 19,
+    t50: 262,
+    t90: 421,
+    t99: 501,
+    max: 534,
+    time: '2.18',
+    name: '/api/posts/my?status=draft&type=discussion&page=1&size=0'
+  },
+  {
+    concurrency: 300,
+    count: 1287,
+    success: 1287,
+    rps: 590,
+    min: 34,
+    t50: 528,
+    t90: 779,
+    t99: 983,
+    max: 1061,
+    time: '2.18',
+    name: '/discuss-kit/api/passports'
+  }
+]
+┌──────────────────────────────────────────────────────────┬─────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────┬─────┬─────┬──────┬───────┐
+│ Name                                                     │ 50C RPS │ 100C RPS │ 150C RPS │ 200C RPS │ 250C RPS │ 300C RPS │ Min  │ 50% │ 90% │ Max  │ Time  │
+├──────────────────────────────────────────────────────────┼─────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────┼─────┼─────┼──────┼───────┤
+│ /discuss-kit/api/discussions/pinned                      │ 230     │ 258      │ 271      │ 197      │ 257      │ 275      │ 87   │ 630 │ 802 │ 1304 │ 14.37 │
+├──────────────────────────────────────────────────────────┼─────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────┼─────┼─────┼──────┼───────┤
+│ /discuss-kit/api/discussions?page=1&size=20              │ 429     │ 249      │ 262      │ 253      │ 257      │ 269      │ 125  │ 657 │ 819 │ 926  │ 13.63 │
+├──────────────────────────────────────────────────────────┼─────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────┼─────┼─────┼──────┼───────┤
+│ /discuss-kit/api/chat/chats/unread                       │ 861     │ 870      │ 900      │ 1603     │ 864      │ 895      │ 15   │ 187 │ 281 │ 429  │ 12.67 │
+├──────────────────────────────────────────────────────────┼─────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────┼─────┼─────┼──────┼───────┤
+│ /discuss-kit/api/boards                                  │ 693     │ 695      │ 749      │ 725      │ 708      │ 728      │ 18   │ 246 │ 302 │ 433  │ 12.79 │
+├──────────────────────────────────────────────────────────┼─────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────┼─────┼─────┼──────┼───────┤
+│ /discuss-kit/api/chat/chats                              │ 247     │ 248      │ 246      │ 244      │ 245      │ 246      │ 80   │ 685 │ 895 │ 1003 │ 13.72 │
+├──────────────────────────────────────────────────────────┼─────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────┼─────┼─────┼──────┼───────┤
+│ /discuss-kit/api/labels                                  │ 601     │ 585      │ 603      │ 571      │ 594      │ 578      │ 21   │ 313 │ 377 │ 518  │ 12.82 │
+├──────────────────────────────────────────────────────────┼─────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────┼─────┼─────┼──────┼───────┤
+│ /media-kit/api/uploader/status                           │ 1803    │ 1863     │ 1881     │ 1853     │ 1905     │ 1777     │ 11   │ 92  │ 113 │ 144  │ 12.50 │
+├──────────────────────────────────────────────────────────┼─────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────┼─────┼─────┼──────┼───────┤
+│ /api/posts/my?status=draft&type=discussion&page=1&size=0 │ 0       │ 0        │ 0        │ 0        │ 0        │ 0        │ -505 │ 150 │ 249 │ 361  │ 12.67 │
+├──────────────────────────────────────────────────────────┼─────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────┼─────┼─────┼──────┼───────┤
+│ /discuss-kit/api/passports                               │ 484     │ 569      │ 592      │ 586      │ 603      │ 590      │ 29   │ 310 │ 440 │ 642  │ 12.67 │
+└──────────────────────────────────────────────────────────┴─────────┴──────────┴──────────┴──────────┴──────────┴──────────┴──────┴─────┴─────┴──────┴───────┘
+Server Version: 1.16.41
+Platform: linux
+CPU Cores: 8
+Memory (GB): 16
+Total Time: 118.624s
+📄 日志共分为 6 页，开始逐页分析...
+🔎 分析第 1 页...
+🔎 分析第 2 页...
+🔎 分析第 3 页...
+🔎 分析第 4 页...
+🔎 分析第 5 页...
+🔎 分析第 6 页...
+
+✅ 所有分页分析完成，汇总结果如下：
+
+--- 第 1 页分析结果 ---
+## 性能压测报告 (部分数据)
+
+**测试对象:**  `https://bbqathtgbx72pp3ee7zbgbvujqycl4er6ga2cxrtafq.did.abtnet.io:8443`  多个API接口
+
+**测试方法:** 并发测试，并发用户数分别为50和100。
+
+**1. 吞吐率 (RPS) 趋势:**
+
+大部分接口在并发用户数从50增加到100时，RPS 有所提升，展现出一定的线性缩放能力。  `/media-kit/api/uploader/status` 接口提升最为显著。  但部分接口提升不明显，例如`/discuss-kit/api/discussions/pinned` 和 `/discuss-kit/api/discussions?page=1&size=20`。
+
+**2. 延迟分布:**
+
+P50, P90, P99 延迟在并发用户数增加后均有不同程度的增加，这表明系统资源在高并发下变得紧张。  `/api/posts/my?status=draft&type=discussion&page=1&size=0` 接口在50并发下失败率100%，无法分析延迟。
+
+**3. 性能瓶颈、非线性缩放和响应抖动:**
+
+* **性能瓶颈:**  部分接口的延迟较高，特别是P99延迟，暗示可能存在数据库查询、网络IO或其他资源瓶颈。  `/api/posts/my?status=draft&type=discussion&page=1&size=0` 接口完全失败，需要重点排查。
+* **非线性缩放:**  部分接口的RPS提升幅度小于并发用户数的提升幅度，暗示存在非线性缩放问题，需要进一步分析。
+* **响应抖动:**  日志中未提供足够信息判断响应抖动情况，需要更长时间序列的数据分析。
+
+**4. 优化建议:**
+
+* **排查`/api/posts/my?status=draft&type=discussion&page=1&size=0`接口失败原因:**  这可能是由于权限问题、数据错误或后端逻辑错误导致。  需要检查日志和代码，确保该接口的正确性和稳定性。
+* **数据库性能优化:**  对于延迟较高的接口，需要检查数据库查询语句的效率，考虑添加索引、优化数据库连接池等。
+* **代码优化:**  检查代码是否存在性能瓶颈，例如不必要的循环、IO操作等。  可以使用性能分析工具(如node-inspector)来定位问题。
+* **负载均衡:**  如果单台服务器无法满足高并发需求，可以考虑使用负载均衡技术，将请求分发到多台服务器。
+* **缓存:**  对于频繁访问的数据，可以考虑使用缓存技术，例如Redis，来减少数据库访问压力。
+* **异步处理:**  对于耗时较长的操作，可以考虑使用异步处理技术，例如消息队列，来提高系统响应速度。
+
+
+**5.  明显问题及优化建议:**
+
+`/api/posts/my?status=draft&type=discussion&page=1&size=0` 接口完全失败，是目前最明显的问题，需要优先解决。  其他接口的延迟和RPS增长情况也需要进一步优化，建议使用性能分析工具进行更深入的分析。
+
+
+**6.  0 RPS 预告:**  已在报告中提及 `/api/posts/my` 接口 0 RPS 的情况，并建议排查权限或 token 问题。
+
+--- 第 2 页分析结果 ---
+## 压测日志分析报告 (第2部分)
+
+**1. 吞吐率 (RPS) 随并发变化趋势:**
+
+大部分接口的RPS随着并发数的增加而增加，但增速并非线性。`/discuss-kit/api/discussions/pinned` 接口在并发数从150到200时，RPS反而下降。 `/media-kit/api/uploader/status` 接口在并发增加时RPS增长显著。
+
+**2. 延迟分布 (P50, P90, P99, Max):**
+
+大部分接口在并发150时，延迟分布相对合理，P99延迟在几百毫秒以内。然而，`/discuss-kit/api/discussions/pinned` 接口在并发200时，P99和Max延迟暴增至3秒以上，表明该接口存在严重的性能问题。
+
+**3. 性能瓶颈、非线性缩放、响应抖动:**
+
+* `/discuss-kit/api/discussions/pinned` 接口在并发200时出现明显的性能瓶颈，RPS下降，延迟大幅增加，可能存在数据库查询慢或资源竞争等问题。
+* 部分接口的RPS增长并非线性，表明系统可能存在资源瓶颈，例如数据库连接数限制或CPU/内存不足。
+* `/discuss-kit/api/discussions/pinned` 接口在并发200时延迟出现剧烈波动，存在明显的响应抖动。
+
+**4. 优化建议:**
+
+* **`/discuss-kit/api/discussions/pinned` 接口:**  需要重点关注该接口的性能问题。建议进行代码审查，优化数据库查询语句，增加缓存，或进行数据库连接池配置优化。  如果该接口涉及到外部依赖，也需要检查外部服务的响应时间。
+* **其他接口:**  监控系统资源使用情况（CPU、内存、数据库连接数等），根据监控结果进行相应的资源扩容或优化。  可以考虑使用异步操作或消息队列来提高吞吐量。
+* **全局优化:**  对所有接口进行代码审查，查找潜在的性能瓶颈，例如数据库连接泄漏、不必要的网络请求等。  考虑使用性能分析工具（如node-inspector）来定位性能瓶颈。
+
+
+**5.  `/api/posts/my` 接口:**  该接口在所有并发测试中均返回0 RPS，且成功率为0%。这很可能是由于权限问题或token过期导致，需要检查认证机制和token有效性。
+
+
+**6.  总结:**
+
+本次压测结果显示，`/discuss-kit/api/discussions/pinned` 接口存在严重的性能问题，需要优先解决。其他接口也存在一定的性能优化空间，建议根据监控数据和性能分析结果进行针对性优化。  `/api/posts/my` 接口需要检查认证机制。
+
+--- 第 3 页分析结果 ---
+##  性能测试日志分析报告 (第3部分)
+
+该部分测试结果显示，在并发用户数从100增加到250，再到300的过程中，大部分接口的RPS（每秒请求数）呈现线性增长趋势，说明系统在该并发范围内具有良好的可扩展性。
+
+**延迟方面：**
+
+*  P50, P90, P99 延迟随着并发数增加而增加，这是预期的现象。但增加幅度在可接受范围内，没有出现明显的非线性增长。
+*  Max延迟也随并发增加而增加，但个别接口的Max延迟相对较高，需要进一步关注。
+
+**性能瓶颈和问题：**
+
+* `/api/posts/my?status=draft&type=discussion&page=1&size=0` 接口在所有并发测试中均失败（Success 为 0.00%），这可能是由于后端逻辑错误、数据库查询超时或其他问题导致。需要重点排查此接口的性能瓶颈。
+* 部分接口的P99延迟相对较高，例如`/discuss-kit/api/discussions/pinned` 和 `/discuss-kit/api/discussions?page=1&size=20`，这表明一小部分请求的响应时间过长，需要优化以提高用户体验。
+
+
+**优化建议：**
+
+1. **重点排查`/api/posts/my?status=draft&type=discussion&page=1&size=0` 接口的错误原因。**  这可能是数据库查询效率低下，代码逻辑错误，或者外部依赖服务不可用等问题。需要仔细检查日志和代码，进行性能调优。
+
+2. **优化高P99延迟接口的性能。**  针对`/discuss-kit/api/discussions/pinned` 和 `/discuss-kit/api/discussions?page=1&size=20` 等接口，可以考虑以下优化策略：数据库索引优化，缓存策略优化，代码优化（减少不必要的计算或IO操作），以及负载均衡等。
+
+3. **监控系统资源使用情况。**  在压测过程中，监控CPU、内存、网络IO、数据库连接池等资源的使用情况，确定是否存在资源瓶颈。
+
+4. **考虑异步处理。**  如果某些操作耗时较长，可以考虑使用异步处理机制，例如消息队列，来提高系统的吞吐量和响应速度。
+
+
+**响应抖动:**  从日志中没有明显观察到响应抖动，但需要更长时间序列的数据来确认。
+
+
+**总结:**
+
+系统整体性能表现良好，但在特定接口存在严重问题和部分接口存在优化空间。  需要针对`/api/posts/my`接口的失败原因进行彻底排查，并对高延迟接口进行针对性优化。
+
+--- 第 4 页分析结果 ---
+##  性能压测日志分析报告 (部分四)
+
+**数据概要:** 本部分日志包含并发用户数为 50 和 100 的压测结果，部分接口在并发150时也有数据。  `/api/posts/my?status=draft&type=discussion&page=1&size=0` 接口在所有并发下均失败 (success: 0)。
+
+**1. 吞吐率 (RPS) 随并发变化趋势:**
+
+大多数接口的 RPS 随着并发用户数的增加而增加，但增幅并非线性。部分接口在并发提升后，RPS 增幅减缓，显示出一定的性能瓶颈。
+
+**2. 延迟分布 (P50, P90, P99, Max):**
+
+除 `/media-kit/api/uploader/status` 接口外，其他接口的延迟在并发增加时均显著增加，尤其是在 P90 和 P99 延迟上体现明显。  `/media-kit/api/uploader/status` 接口延迟相对稳定，但其高吞吐率也暗示潜在的瓶颈。  部分接口出现较大的最大延迟 (Max)，提示存在个别请求处理时间过长的情况。
+
+**3. 性能瓶颈、非线性缩放、响应抖动:**
+
+* **性能瓶颈:** 多数接口在并发增加到 100 时，RPS 增幅减缓，表明存在性能瓶颈。  `/api/posts/my?status=draft&type=discussion&page=1&size=0` 接口完全失败，是严重的性能问题。
+* **非线性缩放:**  RPS 的增长速度低于并发用户数的增长速度，体现了非线性缩放特性。
+* **响应抖动:**  从最大延迟 (Max) 与其他延迟指标的差异来看，存在一定的响应抖动。
+
+**4. 优化建议:**
+
+* **调查 `/api/posts/my?status=draft&type=discussion&page=1&size=0` 接口失败原因:**  这是最优先级的问题，需要排查数据库连接、权限、数据处理逻辑等方面是否存在问题。  0 RPS 的情况，极有可能与权限或 token 有关。
+* **数据库优化:**  对于数据库密集型操作的接口，考虑数据库连接池配置、SQL 优化、索引优化等。
+* **代码优化:**  检查代码是否存在性能瓶颈，例如循环效率低、不必要的计算等。  考虑使用异步操作来提高并发处理能力。
+* **缓存策略:**  对于读取频繁的数据，考虑使用缓存机制，例如 Redis，来减少数据库压力。
+* **负载均衡:**  如果单台服务器无法满足需求，考虑使用负载均衡技术，将请求分发到多台服务器。
+* **性能监控:**  使用性能监控工具，持续监控服务器资源使用情况，及时发现和解决性能问题。
+
+
+**总结:**  该系统在高并发下存在明显的性能瓶颈，特别是 `/api/posts/my` 接口的完全失败需要立即解决。  其他接口也需要进行优化，以提高吞吐率和降低延迟。  建议对数据库和代码进行全面检查，并实施缓存和负载均衡策略。
+
+--- 第 5 页分析结果 ---
+## 性能压测分析报告 (部分数据)
+
+**数据来源:** benchmark.log (部分)
+
+**测试对象:** Node.js 后端服务
+
+**主要问题:**  `/api/posts/my?status=draft&type=discussion&page=1&size=0` 接口在所有并发级别下均返回 0 成功请求数，这强烈暗示该接口存在严重问题，例如权限问题或token失效。其他接口的性能数据分析如下：
+
+
+**1. 吞吐率 (RPS) 随并发变化趋势:**
+
+大部分接口的 RPS 随着并发数的增加而增加，呈现正相关关系，但增长并非完全线性。部分接口在高并发下 RPS 增长放缓，显示出一定的性能瓶颈。
+
+**2. 延迟分布 (P50, P90, P99, Max):**
+
+延迟在不同接口和并发级别下差异较大。部分接口的 P99 和 Max 延迟显著高于 P50 和 P90，表明存在少量高延迟请求，可能由数据库查询、网络IO或其他资源竞争引起。`/discuss-kit/api/discussions/pinned` 接口在并发200时，P99延迟异常高，需要重点关注。
+
+**3. 性能瓶颈、非线性缩放、响应抖动:**
+
+部分接口在高并发下 RPS 增长放缓，暗示存在性能瓶颈，可能与数据库连接池大小、CPU/内存资源不足或代码中存在性能热点有关。  `/discuss-kit/api/discussions/pinned` 接口在并发增加时延迟增长显著，也显示出非线性缩放问题。  部分接口的延迟分布显示出一定的抖动，需要进一步分析原因。
+
+**4. 优化建议:**
+
+* **`/api/posts/my?status=draft&type=discussion&page=1&size=0` 接口:**  优先解决该接口的 0 成功请求数问题。检查权限、token、数据库连接以及接口逻辑是否存在错误。
+* **数据库优化:**  针对延迟较高的接口，优化数据库查询语句，考虑使用缓存（Redis 等）或数据库连接池扩容。
+* **代码优化:**  分析代码热点，优化算法，减少不必要的计算和IO操作。
+* **资源扩容:**  如果资源利用率过高，考虑增加服务器CPU、内存或网络带宽。
+* **异步处理:**  对于IO密集型操作，使用异步处理机制，例如使用Promise或async/await，提高并发处理能力。
+* **负载均衡:**  考虑使用负载均衡器，将请求分发到多台服务器，提高系统整体吞吐率和稳定性。
+* **`/discuss-kit/api/discussions/pinned` 接口:**  重点分析该接口在高并发下的P99延迟异常高的原因，可能需要更深入的代码级性能分析。
+
+
+**5.  其他:**
+
+日志中存在 `min: -1529` 的异常值，需要检查数据采集过程是否存在错误。
+
+
+**总结:**
+
+本次压测结果显示部分接口存在性能瓶颈和非线性缩放问题，需要针对具体接口进行优化。  最紧急的问题是 `/api/posts/my` 接口的 0 成功请求数，需要立即排查并解决。
+
+--- 第 6 页分析结果 ---
+## 压测日志分析报告 (第6部分)
+
+**1. 吞吐率 (RPS) 趋势:**
+
+大部分接口在并发用户数增加时，RPS 呈现先上升后趋于平稳或轻微下降的趋势，这表明系统存在一定的处理能力上限。`/api/posts/my?status=draft&type=discussion&page=1&size=0` 接口 RPS 一直为 0，需要检查权限或 token 问题。`/discuss-kit/api/discussions/pinned` 接口在 200C RPS 时出现明显下降，需要关注。
+
+**2. 延迟分布:**
+
+延迟分布整体来看，P90 和 P99 延迟相对较高，特别是 `/discuss-kit/api/discussions/pinned` 和 `/discuss-kit/api/chat/chats` 接口，表明存在少量请求处理时间过长的情况。`/api/posts/my?status=draft&type=discussion&page=1&size=0` 接口的 Min 延迟为负值，这很可能是日志记录错误。
+
+**3. 性能瓶颈、非线性缩放、响应抖动:**
+
+* **性能瓶颈:**  `/discuss-kit/api/discussions/pinned` 接口在高并发下 RPS 下降明显，可能是数据库查询或其他资源瓶颈导致。部分接口的 P90 和 P99 延迟较高，也暗示着潜在的性能瓶颈。
+* **非线性缩放:** 部分接口在并发增加到一定程度后，RPS 增速放缓甚至下降，体现了非线性缩放特性。
+* **响应抖动:**  部分接口的延迟波动较大，例如 `/discuss-kit/api/discussions/pinned`，这可能与资源竞争或代码逻辑问题有关。
+
+**4. 优化建议:**
+
+* **`/discuss-kit/api/discussions/pinned` 接口:**  优化数据库查询语句，添加索引，或考虑缓存策略（例如 Redis）。分析慢查询日志，找出性能瓶颈。  如果该接口是读多写少，可以考虑使用读写分离。
+* **高延迟接口:**  对 P90 和 P99 延迟高的接口进行代码性能分析，优化代码逻辑，减少 I/O 操作，并检查数据库连接池配置。
+* **`/api/posts/my?status=draft&type=discussion&page=1&size=0` 接口:**  优先解决 RPS 为 0 的问题，检查权限、token、以及接口本身的逻辑错误。
+* **数据库优化:**  整体考虑数据库连接池大小、数据库服务器性能是否满足需求。
+* **缓存:**  对于读多写少的接口，可以考虑使用缓存（例如 Redis）来减少数据库压力。
+* **代码优化:**  对 Node.js 代码进行性能分析，优化代码逻辑，减少不必要的计算和 I/O 操作。
+
+
+**5. 明显问题及优化建议 (已包含在第 4 点)**
+
+
+**6. 0 RPS 接口预告 (已包含在第 4 点)**
