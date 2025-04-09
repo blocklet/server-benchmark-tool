@@ -146,9 +146,15 @@ program.version(version);
 
 program
   .command('init')
+  .option('--type <type>', 'type of benchmark: discuss-kit | server', 'server')
   .description('initialize config file')
-  .action(() => {
-    const config = fs.readFileSync('./util/benchmark.yml', 'utf8');
+  .action((options) => {
+    let config;
+    if (options.type === 'discuss-kit') {
+      config = fs.readFileSync('./util/benchmark-discuss-kit.yml', 'utf8');
+    } else {
+      config = fs.readFileSync('./util/benchmark.yml', 'utf8');
+    }
     fs.writeFileSync('benchmark.yml', config);
     console.log(bold(`Benchmark v${version}\n`));
     console.log('benchmark.yml file is initialized');

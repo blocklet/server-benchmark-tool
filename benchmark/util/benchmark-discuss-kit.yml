@@ -1,0 +1,53 @@
+# origin is the origin of the server
+origin: 'https://your-server-url.com'
+# mode rps or concurrent
+mode: 'rps'
+# concurrency is the concurrency of the benchmark
+concurrency: 100
+# timelimit is the timelimit of the all benchmark
+timelimit: 30
+# data is the data of change to the api
+data:
+  userDid: 'your-user-did'
+  teamDid: 'your-team-did'
+  loginToken: 'your-login-token'
+# logResponse is the logBody of the benchmark
+logResponse: false
+# logError is the logError of the benchmark
+logError: false
+# apis is the apis of the benchmark
+apis:
+  - name: '/discuss-kit/api/discussions/pinned'
+    api: '/discuss-kit/api/discussions/pinned'
+    cookie: 'login_token=$$loginToken'
+
+  - name: '/discuss-kit/api/discussions?page=1&size=20'
+    api: '/discuss-kit/api/discussions?page=1&size=20'
+    cookie: 'login_token=$$loginToken'
+
+  - name: '/discuss-kit/api/chat/chats/unread'
+    api: '/discuss-kit/api/chat/chats/unread'
+    cookie: 'login_token=$$loginToken'
+
+  - name: '/discuss-kit/api/boards'
+    api: '/discuss-kit/api/boards'
+
+  - name: '/discuss-kit/api/chat/chats'
+    api: '/discuss-kit/api/chat/chats'
+    cookie: 'login_token=$$loginToken'
+
+  - name: '/discuss-kit/api/labels'
+    api: '/discuss-kit/api/labels'
+    cookie: 'login_token=$$loginToken'
+
+  - name: '/media-kit/api/uploader/status'
+    api: '/media-kit/api/uploader/status'
+    cookie: 'login_token=$$loginToken'
+
+  - name: '/api/posts/my?status=draft&type=discussion&page=1&size=0'
+    api: '/api/posts/my?status=draft&type=discussion&page=1&size=0'
+    cookie: 'login_token=$$loginToken'
+
+  - name: '/discuss-kit/api/passports'
+    api: '/discuss-kit/api/passports'
+    cookie: 'login_token=$$loginToken'

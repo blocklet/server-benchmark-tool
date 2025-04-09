@@ -22,6 +22,13 @@ Use concurrent mode and require/s mode test(default):
 $ npx @blocklet/server-benchmark init
 ```
 
+User init type:
+
+```bash
+# type: server(default) | discuss-kit
+$ npx @blocklet/server-benchmark init --type server
+```
+
 Edit benchmark.yml, change:
 
 - origin
