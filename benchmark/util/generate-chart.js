@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 const fs = require('fs');
-const os = require('os');
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 /**
  * 生成并保存 RPS vs Concurrency 折线图
@@ -70,12 +69,6 @@ async function generateChart(data, outputFile = 'benchmark-chart.png') {
   const buffer = await chartJSNodeCanvas.renderToBuffer(configuration);
   fs.writeFileSync(outputFile, buffer);
   console.log(`✅ Chart saved as ${outputFile}`);
-  // 打印下载命令提示
-  const { username } = os.userInfo();
-  const hostname = os.hostname();
-  const cwd = process.cwd();
-  console.log(`scp ${username}@${hostname}:${cwd}/${outputFile} ./`);
-  console.log(`scp ${username}@${hostname}:${cwd}/benchmark.log ./`);
 }
 
 module.exports = generateChart;
