@@ -35,6 +35,12 @@ You can edit benchmark.yml and run:
 $ npx @blocklet/server-benchmark run
 ```
 
+You can set config path:
+
+```bash
+$ npx @blocklet/server-benchmark run --config benchmark.yml
+```
+
 ## FAQ
 
 How to access blocklet by local domain?

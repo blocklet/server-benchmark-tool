@@ -32,4 +32,4 @@ lerna-debug.log*
 
 # benchmark
 benchmark/benchmark.yml
-benchmark/benchmark-temp.yml
+benchmark/benchmark-*.yml
