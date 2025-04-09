@@ -174,6 +174,13 @@ program
     }
 
     const config = loadConfig(configPath);
+    if (config.origin === 'https://your-server-url.com') {
+      console.error('Please update the origin in benchmark.yml');
+      return;
+    }
+    if (config.data?.loginToken === 'your-login-token') {
+      console.error('You not update the loginToken in benchmark.yml');
+    }
     const { origin } = new URL(config.origin);
     let list = config.apis.filter((item) => item && !item.skip);
     const onlyList = config.apis.filter((item) => item.only);
