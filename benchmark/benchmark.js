@@ -3,6 +3,7 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-promise-executor-return */
 /* eslint-disable no-console */
+require('./util/console-to-file');
 const { Command } = require('commander');
 const Table = require('cli-table-redemption');
 const { bold, cyan } = require('chalk');
@@ -17,6 +18,8 @@ const { version } = require('./package.json');
 const replaceApiPlaceholders = require('./util/replace-api-placeholders');
 const replaceApiPrefix = require('./util/replace-api-prefix');
 const consoleTableRamp = require('./util/console-table-ramp');
+const analyzeBenchmark = require('./util/analyze-benchmark');
+const generateChart = require('./util/generate-chart');
 
 function createClient(origin, loginToken) {
   const client = new NodeClient(origin);
@@ -215,6 +218,12 @@ program
     if (config.data?.userDid.indexOf('did:abt:') === 0) {
       config.data.userDid = config.data.userDid.replace('did:abt:', '');
     }
+    if (config.aiAnalysis?.enable) {
+      if (!process.env.OPENAI_CLIENT) {
+        console.error('When you enable the aiAnalysis, you need to set the OPENAI_CLIENT in .env');
+        return;
+      }
+    }
 
     const { origin } = new URL(config.origin);
     if (!origin || origin.indexOf('http') !== 0) {
@@ -222,20 +231,26 @@ program
       return;
     }
 
+    if (fs.existsSync('benchmark.log')) {
+      fs.writeFileSync('benchmark.log', '');
+      console.log('benchmark.log cleaned');
+    }
+
     const allResults = [];
 
-    const buildOnce = async () => {
-      let list = config.apis.filter((item) => item && !item.skip);
-      const onlyList = config.apis.filter((item) => item.only);
-      if (onlyList.length > 0) list = onlyList;
+    let list = config.apis.filter((item) => item && !item.skip);
+    const onlyList = config.apis.filter((item) => item.only);
+    if (onlyList.length > 0) list = onlyList;
 
-      list = replaceApiPlaceholders(list, config.data);
-      if (config.apiReplace) {
-        replaceApiPrefix(list, config.apiReplace);
-      }
-      if (config.logParseApis) {
-        console.log(list);
-      }
+    list = replaceApiPlaceholders(list, config.data);
+    if (config.apiReplace) {
+      replaceApiPrefix(list, config.apiReplace);
+    }
+    if (config.logParseApis) {
+      console.log(list);
+    }
+
+    const buildOnce = async () => {
       console.log(bold(`Benchmarking ${cyan(origin)}\n`));
 
       const modes = config.mode === 'all' ? ['rps', 'concurrent'] : [config.mode];
@@ -327,8 +342,8 @@ program
         config.concurrency = ramp * (i + 1);
         await buildOnce();
       }
-      console.log(allResults);
       consoleTableRamp(allResults);
+      generateChart(allResults, path.join(process.cwd(), 'benchmark-chart.png'));
     } else {
       await buildOnce();
     }
@@ -340,6 +355,15 @@ program
     console.log(cyan('CPU Cores:'), `${sysInfo.cpu?.cores}`);
     console.log(cyan('Memory (GB):'), `${Math.ceil((sysInfo.mem?.total || 0) / 1024 / 1024 / 1024)}`);
     console.log(cyan('Total Time:'), `${(Date.now() - startTime) / 1000}s`);
+
+    if (config.aiAnalysis?.enable) {
+      await analyzeBenchmark({
+        language: config.aiAnalysis?.language || '中文',
+        techStack: config.aiAnalysis?.techStack || 'node.js',
+        model: config.aiAnalysis?.model || 'gpt-4o',
+        logFilePath: path.join(process.cwd(), 'benchmark.log'),
+      });
+    }
   });
 
 program.parse(process.argv);

@@ -33,3 +33,4 @@ lerna-debug.log*
 # benchmark
 benchmark/benchmark.yml
 benchmark/benchmark-*.yml
+benchmark/output.png

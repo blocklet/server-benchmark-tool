@@ -7,7 +7,7 @@ const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
  * @param {Array} data 原始数据数组
  * @param {string} [outputFile='output.png'] 输出文件名
  */
-async function generateChart(data, outputFile = 'output.png') {
+async function generateChart(data, outputFile = 'benchmark-chart.png') {
   // 整理成 API -> { concurrency: rps }
   const grouped = {};
   for (const item of data) {
@@ -75,6 +75,7 @@ async function generateChart(data, outputFile = 'output.png') {
   const hostname = os.hostname();
   const cwd = process.cwd();
   console.log(`scp ${username}@${hostname}:${cwd}/${outputFile} ./`);
+  console.log(`scp ${username}@${hostname}:${cwd}/benchmark.log ./`);
 }
 
 module.exports = generateChart;

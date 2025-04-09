@@ -13,6 +13,13 @@ ramp: 50
 # timelimit is the total duration of the benchmark in seconds
 timelimit: 30
 
+# aiAnalysis indicates whether to analyze the benchmark results using AI
+aiAnalysis:
+  enable: false
+  language: 'english'
+  techStack: 'nodejs'
+  model: 'gpt-4o'
+
 # data provides dynamic values to be used in API requests
 data:
   userDid: 'your-user-did'
