@@ -19,14 +19,14 @@
 Use concurrent mode and require/s mode test(default):
 
 ```bash
-$ npx @blocklet/server-benchmark init
+$ npx @blocklet/benchmark init
 ```
 
 User init type:
 
 ```bash
 # type: server(default) | discuss-kit | tool
-$ npx @blocklet/server-benchmark init --type server,discuss-kit
+$ npx @blocklet/benchmark init --type server,discuss-kit
 ```
 
 Edit benchmark.yml, change:
@@ -39,13 +39,13 @@ Edit benchmark.yml, change:
 You can edit benchmark.yml and run:
 
 ```bash
-$ npx @blocklet/server-benchmark run
+$ npx @blocklet/benchmark run
 ```
 
 You can set config path:
 
 ```bash
-$ npx @blocklet/server-benchmark run --config benchmark.yml
+$ npx @blocklet/benchmark run --config benchmark.yml
 ```
 
 ## FAQ

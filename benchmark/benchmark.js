@@ -151,7 +151,7 @@ program.version(version);
 
 program
   .command('init')
-  .option('--type <type>', 'type of benchmark: discuss-kit | server | tool', 'server')
+  .option('--type <type>', 'type of benchmark: server | discuss-kit | tool', 'server')
   .description('initialize config file')
   .action((options) => {
     const types = options.type.split(',');

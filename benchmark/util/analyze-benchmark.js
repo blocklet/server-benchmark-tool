@@ -12,7 +12,7 @@ async function analyzeBenchmark({
   const openai = new OpenAI({ apiKey: process.env.OPENAI_CLIENT, baseURL: process.env.OPENAI_BASE_URL });
 
   if (!fs.existsSync(logFilePath)) {
-    console.error('❌ benchmark.log 文件不存在');
+    console.error('❌ benchmark.log not found');
     return;
   }
 
