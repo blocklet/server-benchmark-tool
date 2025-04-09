@@ -3,7 +3,7 @@ origin: 'https://your-server-url.com'
 # mode rps or concurrent
 mode: 'rps'
 # concurrency is the concurrency of the benchmark
-concurrency: 100
+concurrency: 300
 # timelimit is the timelimit of the all benchmark
 timelimit: 30
 # data is the data of change to the api
