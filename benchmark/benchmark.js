@@ -151,9 +151,9 @@ program
   .action((options) => {
     let config;
     if (options.type === 'discuss-kit') {
-      config = fs.readFileSync('./util/benchmark-discuss-kit.yml', 'utf8');
+      config = fs.readFileSync(path.resolve(__dirname, './util/benchmark-discuss-kit.yml'), 'utf8');
     } else {
-      config = fs.readFileSync('./util/benchmark.yml', 'utf8');
+      config = fs.readFileSync(path.resolve(__dirname, './util/benchmark.yml'), 'utf8');
     }
     fs.writeFileSync('benchmark.yml', config);
     console.log(bold(`Benchmark v${version}\n`));
