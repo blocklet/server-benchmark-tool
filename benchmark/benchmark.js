@@ -10,9 +10,21 @@ const Table = require('cli-table-redemption');
 const { bold, cyan } = require('chalk');
 const joinUrl = require('url-join');
 const NodeClient = require('@abtnode/client');
+const fs = require('fs');
+const path = require('path');
+const YAML = require('yaml');
+
+const loadConfig = (filePath) => {
+  const content = fs.readFileSync(filePath, 'utf8');
+  if (filePath.endsWith('.yml')) {
+    return YAML.parse(content);
+  }
+  return JSON.parse(content);
+};
 
 const { getSysInfo } = require('./util/sysinfo');
 const { version } = require('./package.json');
+const replaceApiPlaceholders = require('./util/replace-api-placeholders');
 
 function createClient(origin, loginToken) {
   const client = new NodeClient(origin);
@@ -51,15 +63,30 @@ function percentile(sortedArr, p) {
  *   - timelimit: 测试时长（秒）
  *   - loginToken: 若存在，加入 header 中
  *   - body: 若存在，使用 POST 请求，并以此作为请求体（要求为 JSON 字符串）
- *   - gqlFn: 若存在，调用 client 的对应方法
+ *   - abtnodeFn: 若存在，调用 client 的对应方法
  *   - format: 输出格式，默认 json
  *   - mode: 请求模式，"rps" 表示每秒发起固定数量的请求（默认），"concurrent" 表示保持并发数（请求完成后立即发起新请求）
  */
 async function benchmarkEndpoint(
   url,
-  { concurrency, timelimit, loginToken, userDid, body, gqlFn, format = 'json', mode = 'rps' }
+  {
+    concurrency,
+    timelimit,
+    cookie,
+    body,
+    abtnodeFn,
+    format = 'json',
+    mode = 'rps',
+    method = 'GET',
+    assert,
+    headers,
+    data,
+    logError = false,
+    logBody = false,
+  }
 ) {
-  const client = createClient(url, loginToken);
+  console.log('==debug==', logError, logBody);
+  const client = createClient(url, data.loginToken);
   let completed = 0;
   let successes = 0;
   const latencies = [];
@@ -71,14 +98,17 @@ async function benchmarkEndpoint(
   async function sendRequest() {
     const reqStart = Date.now();
     try {
-      if (gqlFn) {
-        await client[gqlFn]({ input: body });
+      if (abtnodeFn) {
+        const res = await client[abtnodeFn]({ input: body });
+        if (logBody) {
+          console.log(res);
+        }
         const reqEnd = Date.now();
         latencies.push(Math.max(reqEnd - reqStart, 1));
         successes++;
       } else {
         const fetchOpts = {
-          method: body ? 'POST' : 'GET',
+          method,
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
           },
@@ -87,36 +117,42 @@ async function benchmarkEndpoint(
           fetchOpts.headers['Content-Type'] = 'application/json';
           fetchOpts.body = body;
         }
-        if (loginToken || userDid) {
-          fetchOpts.headers.cookie = `login_token=${loginToken}`;
+        if (cookie) {
+          fetchOpts.headers.cookie = cookie;
         }
-        if (url.includes('/api/did/session') && loginToken) {
-          const res = await fetch(url, fetchOpts).then((v) => v.json());
-          const reqEnd = Date.now();
-          latencies.push(Math.max(reqEnd - reqStart, 1));
-          if (res.error || !res.user) {
-            throw new Error(res.error);
-          }
-          successes++;
-        } else if (url.includes('/user-session/myself')) {
-          const res = await fetch(url, fetchOpts).then((v) => v.json());
-          const reqEnd = Date.now();
-          latencies.push(Math.max(reqEnd - reqStart, 1));
-          if (res.error) {
-            throw new Error(res.error);
-          }
-          if (res.length > 0) successes++;
-        } else {
-          const res = await fetch(url, fetchOpts).then((v) => v[format]());
-          if (res.error) {
-            throw new Error(res.error);
-          }
-          const reqEnd = Date.now();
-          latencies.push(Math.max(reqEnd - reqStart, 1));
-          successes++;
+        if (headers) {
+          Object.entries(headers).forEach(([key, value]) => {
+            fetchOpts.headers[key] = value;
+          });
         }
+        const res = await fetch(url, fetchOpts).then((v) => v[format]());
+        if (logBody) {
+          console.log(res);
+        }
+        if (res.error) {
+          throw new Error(res.error);
+        }
+        if (assert && format === 'json') {
+          Object.entries(assert).forEach(([key, value]) => {
+            if (value === 'null') {
+              if (res[key]) {
+                throw new Error(`${key} is not null`);
+              }
+            } else if (value === 'not-null') {
+              if (typeof res[key] === 'undefined') {
+                throw new Error(`${key} is null`);
+              }
+            }
+          });
+        }
+        const reqEnd = Date.now();
+        latencies.push(Math.max(reqEnd - reqStart, 1));
+        successes++;
       }
     } catch (err) {
+      if (logError) {
+        console.error(err);
+      }
       const reqEnd = Date.now();
       latencies.push(reqEnd - reqStart);
       // 请求异常，不计入成功数
@@ -182,14 +218,19 @@ const program = new Command();
 
 program
   .version(version)
-  .option('-o, --origin <string>', 'origin')
-  .option('-c, --concurrency <number>', 'pre-request concurrency, default 10', parseInt, 10)
-  .option('-t, --timelimit <number>', 'test duration, default 10', parseInt, 10)
-  .option('--login-token [string]', 'login token')
-  .option('--user-did [string]', 'user did')
-  .option('--match [string]', 'only test endpoints matching this substring')
-  .option('--team-did [string]', 'team did')
-  .option('--body [string]', 'request body (string)')
+  .command('init')
+  .description('initialize config file')
+  .action(() => {
+    console.log(bold(`Benchmark v${version}\n`));
+    const config = fs.readFileSync('./util/benchmark.yml', 'utf8');
+    fs.writeFileSync('benchmark.yml', config);
+    console.log('benchmark.yml file is initialized');
+  });
+
+program
+  .command('run')
+  .version(version)
+  .option('--config <path>', 'path to JSON config file defining endpoints')
   .option('--format [string]', 'output format, optional "row", "json", "table", default "table"', 'table')
   // 新增 mode 参数，"rps" 表示每秒固定数量请求，"concurrent" 表示始终保持并发，"all" 表示两种模式各测一半时间
   .option(
@@ -198,91 +239,27 @@ program
     'all'
   )
   .action(async (options) => {
-    let { origin } = options;
     console.log(bold(`Benchmark v${version}\n`));
+    const configPath = options.config || path.join(process.cwd(), 'benchmark.yml');
 
-    // 处理 origin
-    if (!origin.startsWith('http')) {
-      origin = `https://${origin}`;
+    if (!fs.existsSync(configPath)) {
+      console.error('config file is required');
+      return;
     }
-    origin = new URL(origin).origin;
+
+    const config = loadConfig(configPath);
+    let list = config.apis.filter((item) => item && !item.skip);
+    const onlyList = config.apis.filter((item) => item && item.only);
+    if (onlyList.length > 0) {
+      list = onlyList;
+    }
+    list = replaceApiPlaceholders(list, config.data);
+    console.log('==debug==', list);
+
+    const { origin } = new URL(config.origin);
     console.log(`${bold('Benchmarking')} ${cyan(origin)}\n`);
 
-    const list = [
-      { name: '/api/date', api: '/api/date', format: 'text' },
-      {
-        name: '/api/date (with session)',
-        api: '/api/date',
-        loginToken: options.loginToken,
-        format: 'text',
-      },
-      { name: '/.well-known/service/api/did/login', api: '/.well-known/service/api/did/login', format: 'text' },
-      {
-        name: '/.well-known/service/api/did/session',
-        api: '/.well-known/service/api/did/session',
-      },
-      {
-        name: '/.well-known/service/api/did/session:with-session',
-        api: '/.well-known/service/api/did/session',
-        loginToken: options.loginToken,
-      },
-      {
-        name: '/.well-known/service/api/user-session',
-        api: '/.well-known/service/api/user-session',
-        loginToken: options.loginToken,
-      },
-      {
-        name: '/.well-known/service/api/user/privacy/config',
-        api: `/.well-known/service/api/user/privacy/config?did=${options.userDid}`,
-        loginToken: options.loginToken,
-      },
-      { name: '/invited-only:without-session', api: '/invited-only', format: 'text' },
-      {
-        name: `/api/user/${options.userDid}`,
-        api: `/api/user/${options.userDid}?return=1`,
-        loginToken: options.loginToken,
-      },
-      { name: '/api/users', api: '/api/users?return=1', loginToken: options.loginToken },
-      { name: '/__blocklet__.js', api: '/__blocklet__.js', format: 'text' },
-      {
-        name: '/.well-known/service/user/settings',
-        api: '/.well-known/service/user/settings?locale=en',
-        loginToken: options.loginToken,
-        format: 'text',
-      },
-      {
-        name: '/.well-known/service/api/user-session/myself',
-        api: '/.well-known/service/api/user-session/myself',
-        loginToken: options.loginToken,
-      },
-      {
-        name: '/.well-known/service/api/gql:getNotifications',
-        api: '/.well-known/service/api/gql',
-        loginToken: options.loginToken,
-        gqlFn: 'getNotifications',
-        body: {
-          teamDid: options.teamDid,
-          userDid: options.userDid,
-        },
-      },
-      {
-        name: '/.well-known/service/api/gql:getNotificationComponents',
-        api: '/.well-known/service/api/gql',
-        gqlFn: 'getNotificationComponents',
-        loginToken: options.loginToken,
-        body: {
-          teamDid: options.teamDid,
-          userDid: options.userDid,
-        },
-      },
-    ].filter((item) => {
-      if (options.match) {
-        return item.name.includes(options.match);
-      }
-      return !!item;
-    });
-
-    if (options.mode === 'all') {
+    if (config.mode === 'all') {
       // 当 mode 为 all 时，两种模式各测试一半时间
       const modes = ['rps', 'concurrent'];
       const allResults = {};
@@ -293,17 +270,17 @@ program
           const url = joinUrl(origin, item.api);
           console.log(bold(`Testing ${item.name} in mode ${m}`));
           // 每个请求的时长调整为总时长的一半除以 endpoint 数量
-          const perEndpointTime = Math.max(options.timelimit / 2 / list.length, 2);
+          const perEndpointTime = Math.max(config.timelimit / 2 / list.length, 2);
           const opts = {
-            concurrency: options.concurrency || 100,
+            ...item,
+            concurrency: config.concurrency || 100,
             timelimit: perEndpointTime,
-            loginToken: item.loginToken || undefined,
-            userDid: item.userDid || undefined,
-            gqlFn: item.gqlFn || undefined,
-            api: item.api || undefined,
             format: item.format || 'json',
-            body: item.body || options.body || undefined,
+            body: item.body || config.body || undefined,
             mode: m,
+            data: config.data,
+            logBody: config.logBody,
+            logError: config.logError,
           };
           const res = await benchmarkEndpoint(url, opts);
           res.name = item.name;
@@ -357,7 +334,7 @@ program
       }
     } else {
       // 单一 mode 的情况
-      console.log('mode', options.mode);
+      console.log('mode', config.mode);
       const results = [];
       const startTime = Date.now();
       for (const item of list) {
@@ -367,15 +344,14 @@ program
         const url = joinUrl(origin, item.api);
         console.log(bold(`Testing ${item.name}`));
         const opts = {
-          concurrency: options.concurrency || 100,
-          timelimit: Math.max(options.timelimit / list.length, 2),
-          loginToken: item.loginToken || undefined,
-          userDid: item.userDid || undefined,
-          gqlFn: item.gqlFn || undefined,
-          api: item.api || undefined,
-          format: item.format || 'json',
-          body: item.body || options.body || undefined,
-          mode: options.mode,
+          ...item,
+          concurrency: config.concurrency || 100,
+          timelimit: Math.max(config.timelimit / list.length, 2),
+          body: item.body || config.body || undefined,
+          mode: config.mode,
+          data: config.data,
+          logBody: config.logBody,
+          logError: config.logError,
         };
         const res = await benchmarkEndpoint(url, opts);
         res.name = item.name;
@@ -384,7 +360,7 @@ program
 
       const tableHead = [
         'Case',
-        options.mode === 'rps' ? 'Req/s' : 'Concurrency',
+        config.mode === 'rps' ? 'Req/s' : 'Concurrency',
         'Requests',
         'Success',
         'RPS',

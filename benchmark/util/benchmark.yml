@@ -1,0 +1,102 @@
+# origin is the origin of the server
+origin: 'https://your-server-url.com'
+# mode rps or concurrent
+mode: 'rps'
+# concurrency is the concurrency of the benchmark
+concurrency: 100
+# timelimit is the timelimit of the all benchmark
+timelimit: 30
+# data is the data of change to the api
+data:
+  userDid: 'your-user-did'
+  teamDid: 'your-team-did'
+  loginToken: 'your-login-token'
+# logBody is the logBody of the benchmark
+logBody: false
+# logError is the logError of the benchmark
+logError: false
+# apis is the apis of the benchmark
+apis:
+  - name: '/api/date'
+    api: '/api/date'
+    # method is default GET, can be GET, POST, PUT, DELETE
+    method: 'GET'
+    # if has skip field, if true, the api will be skipped
+    skip: false
+    # if has only field, if true, the api will be only
+    only: false
+    # format is fetch default json, can be text, json
+    format: 'text'
+    # headers is the headers of the request, default is 'Content-Type': 'application/json; charset=utf-8'
+    headers:
+      'Content-Type': 'application/json; charset=utf-8'
+
+  - name: '/api/date:with-session'
+    api: '/api/date'
+    cookie: 'login_token=$$loginToken'
+    format: 'text'
+
+  - name: '/.well-known/service/api/did/login'
+    api: '/.well-known/service/api/did/login'
+    format: 'text'
+
+  - name: '/.well-known/service/api/did/session'
+    api: '/.well-known/service/api/did/session'
+    assert:
+      error: 'null'
+      user: 'not-null'
+
+  - name: '/.well-known/service/api/did/session:with-session'
+    api: '/.well-known/service/api/did/session'
+    cookie: 'login_token=$$loginToken'
+
+  - name: '/.well-known/service/api/user-session'
+    api: '/.well-known/service/api/user-session'
+    cookie: 'login_token=$$loginToken'
+
+  - name: '/.well-known/service/api/user/privacy/config'
+    api: '/.well-known/service/api/user/privacy/config?did=$$userDid'
+    cookie: 'login_token=$$loginToken'
+
+  - name: '/invited-only:without-session'
+    api: '/invited-only'
+    format: 'text'
+
+  - name: '/api/user/$$userDid'
+    api: '/api/user/$$userDid?return=1'
+    cookie: 'login_token=$$loginToken'
+
+  - name: '/api/users'
+    api: '/api/users?return=1'
+    cookie: 'login_token=$$loginToken'
+
+  - name: '/__blocklet__.js'
+    api: '/__blocklet__.js'
+    format: 'text'
+
+  - name: '/.well-known/service/user/settings'
+    api: '/.well-known/service/user/settings?locale=en'
+    cookie: 'login_token=$$loginToken'
+    format: 'text'
+
+  - name: '/.well-known/service/api/user-session/myself'
+    api: '/.well-known/service/api/user-session/myself'
+    cookie: 'login_token=$$loginToken'
+    assert:
+      error: 'null'
+
+  - name: 'getNotifications'
+    api: '/.well-known/service/api/gql'
+    abtnodeFn: 'getNotifications'
+    cookie: 'login_token=$$loginToken'
+    body:
+      teamDid: '$$teamDid'
+      userDid: '$$userDid'
+
+  - name: 'getNotificationComponents'
+    api: '/.well-known/service/api/gql'
+    abtnodeFn: 'getNotificationComponents'
+    cookie: 'login_token=$$loginToken'
+    body:
+      teamDid: '$$teamDid'
+      userDid: '$$userDid'
