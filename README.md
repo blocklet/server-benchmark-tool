@@ -25,8 +25,8 @@ $ npx @blocklet/server-benchmark init
 User init type:
 
 ```bash
-# type: server(default) | discuss-kit
-$ npx @blocklet/server-benchmark init --type server
+# type: server(default) | discuss-kit | tool
+$ npx @blocklet/server-benchmark init --type server,discuss-kit
 ```
 
 Edit benchmark.yml, change:

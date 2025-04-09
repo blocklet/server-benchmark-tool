@@ -248,9 +248,7 @@ program
 
         for (const item of list) {
           const url = joinUrl(origin, item.api);
-          if (!config.ramp) {
-            console.log(bold(`Testing ${item.name}`));
-          }
+          console.log(bold(`Testing ${item.name}`));
 
           const timePerEndpoint = Math.max(config.timelimit / (modes.length * list.length), 2);
           // eslint-disable-next-line no-await-in-loop
