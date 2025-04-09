@@ -22,28 +22,15 @@ logResponse: false
 # logError determines whether to log any errors encountered during requests
 logError: false
 
+# logParseApis indicates whether to log the parsed APIs
+logParseApis: false
+
+# apiReplace is a map of API endpoints to be replaced with dynamic values
+apiReplace:
+  '^/api-router/': '/api-replace-router/'
+
 # apis defines the list of API endpoints to benchmark
 apis:
-  - name: '/api/date'
-    api: '/api/date'
-    # method specifies the HTTP method: GET (default), POST, PUT, DELETE
-    method: 'GET'
-    # skip marks this API to be skipped if set to true
-    skip: false
-    # only means only this API will run if set to true
-    only: false
-    # format specifies the expected response format: 'json' (default) or 'text'
-    format: 'text'
-    # headers defines custom request headers
-    headers:
-      'Content-Type': 'application/json; charset=utf-8'
-
-  - name: '/api/date:with-session'
-    api: '/api/date'
-    # cookie attaches a login token for session simulation
-    cookie: 'login_token=$$loginToken'
-    format: 'text'
-
   - name: '/.well-known/service/api/did/login'
     api: '/.well-known/service/api/did/login'
     format: 'text'
@@ -65,18 +52,6 @@ apis:
 
   - name: '/.well-known/service/api/user/privacy/config'
     api: '/.well-known/service/api/user/privacy/config?did=$$userDid'
-    cookie: 'login_token=$$loginToken'
-
-  - name: '/invited-only:without-session'
-    api: '/invited-only'
-    format: 'text'
-
-  - name: '/api/user/$$userDid'
-    api: '/api/user/$$userDid?return=1'
-    cookie: 'login_token=$$loginToken'
-
-  - name: '/api/users'
-    api: '/api/users?return=1'
     cookie: 'login_token=$$loginToken'
 
   - name: '/__blocklet__.js'

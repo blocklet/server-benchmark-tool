@@ -15,6 +15,7 @@ const YAML = require('yaml');
 const { getSysInfo } = require('./util/sysinfo');
 const { version } = require('./package.json');
 const replaceApiPlaceholders = require('./util/replace-api-placeholders');
+const replaceApiPrefix = require('./util/replace-api-prefix');
 
 function createClient(origin, loginToken) {
   const client = new NodeClient(origin);
@@ -146,16 +147,42 @@ program.version(version);
 
 program
   .command('init')
-  .option('--type <type>', 'type of benchmark: discuss-kit | server', 'server')
+  .option('--type <type>', 'type of benchmark: discuss-kit | server | tool', 'server')
   .description('initialize config file')
   .action((options) => {
-    let config;
-    if (options.type === 'discuss-kit') {
-      config = fs.readFileSync(path.resolve(__dirname, './util/benchmark-discuss-kit.yml'), 'utf8');
+    const types = options.type.split(',');
+    console.log('==debug==', types);
+    if (types.length === 1) {
+      let config;
+      if (options.type === 'discuss-kit') {
+        config = fs.readFileSync(path.resolve(__dirname, './util/benchmark-discuss-kit.yml'), 'utf8');
+      } else if (options.type === 'tool') {
+        config = fs.readFileSync(path.resolve(__dirname, './util/benchmark-tool.yml'), 'utf8');
+      } else {
+        config = fs.readFileSync(path.resolve(__dirname, './util/benchmark-server.yml'), 'utf8');
+      }
+      fs.writeFileSync('benchmark.yml', config);
     } else {
-      config = fs.readFileSync(path.resolve(__dirname, './util/benchmark.yml'), 'utf8');
+      const configs = types.map((type) => {
+        const filePath = path.resolve(__dirname, `./util/benchmark-${type}.yml`);
+        if (!fs.existsSync(filePath)) {
+          throw new Error(`${filePath} is not found`);
+        }
+        return fs.readFileSync(path.resolve(__dirname, `./util/benchmark-${type}.yml`), 'utf8');
+      });
+      const ymls = configs.map((v) => YAML.parse(v));
+      const apis = [];
+      ymls.forEach((v) => {
+        if (v.apis) {
+          apis.push(...v.apis);
+        }
+      });
+      const yml = ymls[0];
+      yml.apis = apis;
+      const config = YAML.stringify(yml);
+      fs.writeFileSync('benchmark.yml', config);
     }
-    fs.writeFileSync('benchmark.yml', config);
+
     console.log(bold(`Benchmark v${version}\n`));
     console.log('benchmark.yml file is initialized');
   });
@@ -198,10 +225,17 @@ program
     if (onlyList.length > 0) list = onlyList;
 
     list = replaceApiPlaceholders(list, config.data);
+    if (config.apiReplace) {
+      replaceApiPrefix(list, config.apiReplace);
+    }
+    if (config.logParseApis) {
+      console.log(list);
+    }
     console.log(bold(`Benchmarking ${cyan(origin)}\n`));
 
     const modes = config.mode === 'all' ? ['rps', 'concurrent'] : [config.mode];
     const resultsByMode = {};
+    const startTime = Date.now();
 
     for (const mode of modes) {
       console.log(bold(`\n--- Testing endpoints in mode ${mode} ---\n`));
@@ -283,6 +317,7 @@ program
     console.log(cyan('Platform:'), sysInfo.os?.platform);
     console.log(cyan('CPU Cores:'), `${sysInfo.cpu?.cores}`);
     console.log(cyan('Memory (GB):'), `${Math.ceil((sysInfo.mem?.total || 0) / 1024 / 1024 / 1024)}`);
+    console.log(cyan('Total Time:'), `${(Date.now() - startTime) / 1000}s`);
   });
 
 program.parse(process.argv);
