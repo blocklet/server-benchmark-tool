@@ -1,38 +1,46 @@
-# origin is the origin of the server
+# origin is the base URL of the server to be tested
 origin: 'https://your-server-url.com'
-# mode rps or concurrent
+
+# mode determines the benchmarking mode: 'rps' for requests per second, or 'concurrent' for concurrent users
 mode: 'rps'
-# concurrency is the concurrency of the benchmark
+
+# concurrency is the number of concurrent requests (used when mode is 'concurrent')
 concurrency: 300
-# timelimit is the timelimit of the all benchmark
+
+# timelimit is the total duration of the benchmark in seconds
 timelimit: 30
-# data is the data of change to the api
+
+# data provides dynamic values to be used in API requests
 data:
   userDid: 'your-user-did'
   teamDid: 'your-team-did'
   loginToken: 'your-login-token'
-# logResponse is the logBody of the benchmark
+
+# logResponse determines whether to log the response body of each request
 logResponse: false
-# logError is the logError of the benchmark
+
+# logError determines whether to log any errors encountered during requests
 logError: false
-# apis is the apis of the benchmark
+
+# apis defines the list of API endpoints to benchmark
 apis:
   - name: '/api/date'
     api: '/api/date'
-    # method is default GET, can be GET, POST, PUT, DELETE
+    # method specifies the HTTP method: GET (default), POST, PUT, DELETE
     method: 'GET'
-    # if has skip field, if true, the api will be skipped
+    # skip marks this API to be skipped if set to true
     skip: false
-    # if has only field, if true, the api will be only
+    # only means only this API will run if set to true
     only: false
-    # format is fetch default json, can be text, json
+    # format specifies the expected response format: 'json' (default) or 'text'
     format: 'text'
-    # headers is the headers of the request, default is 'Content-Type': 'application/json; charset=utf-8'
+    # headers defines custom request headers
     headers:
       'Content-Type': 'application/json; charset=utf-8'
 
   - name: '/api/date:with-session'
     api: '/api/date'
+    # cookie attaches a login token for session simulation
     cookie: 'login_token=$$loginToken'
     format: 'text'
 
@@ -42,6 +50,7 @@ apis:
 
   - name: '/.well-known/service/api/did/session'
     api: '/.well-known/service/api/did/session'
+    # assert checks expected response fields
     assert:
       error: 'null'
       user: 'not-null'
