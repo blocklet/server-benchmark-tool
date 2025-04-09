@@ -16,6 +16,7 @@ const { getSysInfo } = require('./util/sysinfo');
 const { version } = require('./package.json');
 const replaceApiPlaceholders = require('./util/replace-api-placeholders');
 const replaceApiPrefix = require('./util/replace-api-prefix');
+const consoleTableRamp = require('./util/console-table-ramp');
 
 function createClient(origin, loginToken) {
   const client = new NodeClient(origin);
@@ -151,7 +152,6 @@ program
   .description('initialize config file')
   .action((options) => {
     const types = options.type.split(',');
-    console.log('==debug==', types);
     if (types.length === 1) {
       let config;
       if (options.type === 'discuss-kit') {
@@ -194,6 +194,7 @@ program
   .option('--format [string]', 'output format: row, json, table', 'table')
   .option('--mode <mode>', 'request mode: rps | concurrent | all', 'all')
   .action(async (options) => {
+    const startTime = Date.now();
     const configPath = options.config || path.join(process.cwd(), 'benchmark.yml');
     if (!fs.existsSync(configPath)) {
       console.error('config file is required');
@@ -220,96 +221,119 @@ program
       console.error('Origin is not valid');
       return;
     }
-    let list = config.apis.filter((item) => item && !item.skip);
-    const onlyList = config.apis.filter((item) => item.only);
-    if (onlyList.length > 0) list = onlyList;
 
-    list = replaceApiPlaceholders(list, config.data);
-    if (config.apiReplace) {
-      replaceApiPrefix(list, config.apiReplace);
-    }
-    if (config.logParseApis) {
-      console.log(list);
-    }
-    console.log(bold(`Benchmarking ${cyan(origin)}\n`));
+    const allResults = [];
 
-    const modes = config.mode === 'all' ? ['rps', 'concurrent'] : [config.mode];
-    const resultsByMode = {};
-    const startTime = Date.now();
+    const buildOnce = async () => {
+      let list = config.apis.filter((item) => item && !item.skip);
+      const onlyList = config.apis.filter((item) => item.only);
+      if (onlyList.length > 0) list = onlyList;
 
-    for (const mode of modes) {
-      console.log(bold(`\n--- Testing endpoints in mode ${mode} ---\n`));
-      const results = [];
+      list = replaceApiPlaceholders(list, config.data);
+      if (config.apiReplace) {
+        replaceApiPrefix(list, config.apiReplace);
+      }
+      if (config.logParseApis) {
+        console.log(list);
+      }
+      console.log(bold(`Benchmarking ${cyan(origin)}\n`));
 
-      for (const item of list) {
-        const url = joinUrl(origin, item.api);
-        console.log(bold(`Testing ${item.name}`));
+      const modes = config.mode === 'all' ? ['rps', 'concurrent'] : [config.mode];
+      const resultsByMode = {};
 
-        const timePerEndpoint = Math.max(config.timelimit / (modes.length * list.length), 2);
-        // eslint-disable-next-line no-await-in-loop
-        const res = await benchmarkEndpoint(url, {
-          ...item,
-          concurrency: config.concurrency || 100,
-          timelimit: timePerEndpoint,
-          format: item.format || 'json',
-          body: item.body || config.body || undefined,
-          mode,
-          data: config.data,
-          logResponse: config.logResponse,
-          logError: config.logError,
-        });
+      for (const mode of modes) {
+        console.log(bold(`\n--- Testing endpoints in mode ${mode} ---\n`));
 
-        res.name = item.name;
-        results.push(res);
+        const results = [];
+
+        for (const item of list) {
+          const url = joinUrl(origin, item.api);
+          if (!config.ramp) {
+            console.log(bold(`Testing ${item.name}`));
+          }
+
+          const timePerEndpoint = Math.max(config.timelimit / (modes.length * list.length), 2);
+          // eslint-disable-next-line no-await-in-loop
+          const res = await benchmarkEndpoint(url, {
+            ...item,
+            concurrency: config.concurrency || 100,
+            timelimit: timePerEndpoint,
+            format: item.format || 'json',
+            body: item.body || config.body || undefined,
+            mode,
+            data: config.data,
+            logResponse: config.logResponse,
+            logError: config.logError,
+          });
+
+          res.name = item.name;
+          results.push(res);
+          allResults.push(res);
+        }
+
+        resultsByMode[mode] = results;
       }
 
-      resultsByMode[mode] = results;
+      for (const [mode, results] of Object.entries(resultsByMode)) {
+        const table = new Table({
+          head: [
+            'Case',
+            mode === 'rps' ? 'Req/s' : 'Concurrency',
+            'Requests',
+            'Success',
+            'RPS',
+            'Min',
+            '50%',
+            '90%',
+            '99%',
+            'Max',
+            'Test Time',
+          ],
+          style: { head: ['cyan', 'bold'] },
+        });
+
+        results.forEach((result) => {
+          table.push([
+            result.name,
+            result.concurrency,
+            result.count,
+            `${((result.success / result.count) * 100).toFixed(2)}%`,
+            result.rps,
+            `${result.min}ms`,
+            `${result.t50}ms`,
+            `${result.t90}ms`,
+            `${result.t99}ms`,
+            `${result.max}ms`,
+            `${result.time}s`,
+          ]);
+        });
+
+        const modeDescriptions = {
+          rps: 'RPS Mode: Sends a fixed number of requests per second.',
+          concurrent: 'Concurrent Mode: Keeps concurrency level steady.',
+        };
+
+        console.log(`\n${bold('-----------------')}\n`);
+        console.log(`Mode: ${mode} - ${modeDescriptions[mode]}`);
+        console.log(table.toString());
+      }
+    };
+
+    const ramp = Number(config.ramp);
+    if (!Number.isNaN(ramp) && ramp > 0) {
+      const rampTims = Math.floor(config.concurrency / ramp);
+      console.log(`ramp: ${ramp} rampTims: ${rampTims}`);
+      config.concurrency = 0;
+      config.timelimit /= rampTims;
+      for (let i = 0; i < rampTims; i++) {
+        config.concurrency = ramp * (i + 1);
+        await buildOnce();
+      }
+      console.log(allResults);
+      consoleTableRamp(allResults);
+    } else {
+      await buildOnce();
     }
-
-    for (const [mode, results] of Object.entries(resultsByMode)) {
-      const table = new Table({
-        head: [
-          'Case',
-          mode === 'rps' ? 'Req/s' : 'Concurrency',
-          'Requests',
-          'Success',
-          'RPS',
-          'Min',
-          '50%',
-          '90%',
-          '99%',
-          'Max',
-          'Test Time',
-        ],
-        style: { head: ['cyan', 'bold'] },
-      });
-
-      results.forEach((result) => {
-        table.push([
-          result.name,
-          result.concurrency,
-          result.count,
-          `${((result.success / result.count) * 100).toFixed(2)}%`,
-          result.rps,
-          `${result.min}ms`,
-          `${result.t50}ms`,
-          `${result.t90}ms`,
-          `${result.t99}ms`,
-          `${result.max}ms`,
-          `${result.time}s`,
-        ]);
-      });
-
-      const modeDescriptions = {
-        rps: 'RPS Mode: Sends a fixed number of requests per second.',
-        concurrent: 'Concurrent Mode: Keeps concurrency level steady.',
-      };
-
-      console.log(`\n${bold('-----------------')}\n`);
-      console.log(`Mode: ${mode} - ${modeDescriptions[mode]}`);
-      console.log(table.toString());
-    }
-
     const sysInfo = await getSysInfo();
     const serverVersion = await getServerVersion(origin);
 

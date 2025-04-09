@@ -7,6 +7,9 @@ mode: 'concurrent'
 # concurrency is the number of concurrent requests (used when mode is 'concurrent')
 concurrency: 300
 
+# ramp is the ramp concurrency for the benchmark
+ramp: 50
+
 # timelimit is the total duration of the benchmark in seconds
 timelimit: 30
 
@@ -35,14 +38,14 @@ apis:
     api: '/.well-known/service/api/did/login'
     format: 'text'
 
-  - name: '/.well-known/service/api/did/session'
+  - name: '/.well-known/service/api/did/session:without-session'
     api: '/.well-known/service/api/did/session'
     # assert checks expected response fields
     assert:
       error: 'null'
       user: 'not-null'
 
-  - name: '/.well-known/service/api/did/session:with-session'
+  - name: '/.well-known/service/api/did/session'
     api: '/.well-known/service/api/did/session'
     cookie: 'login_token=$$loginToken'
 

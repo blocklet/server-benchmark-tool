@@ -10,6 +10,9 @@ concurrency: 300
 # timelimit defines the total duration of the benchmark in seconds
 timelimit: 30
 
+# ramp is the ramp concurrency for the benchmark
+ramp: 50
+
 # data contains dynamic values to be used in API requests
 data:
   userDid: 'your-user-did'

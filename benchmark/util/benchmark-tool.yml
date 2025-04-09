@@ -4,6 +4,9 @@ origin: 'https://your-server-url.com'
 # mode determines the benchmarking mode: 'rps' for requests per second, or 'concurrent' for concurrent users
 mode: 'concurrent'
 
+# ramp is the ramp concurrency for the benchmark
+ramp: 50
+
 # concurrency is the number of concurrent requests (used when mode is 'concurrent')
 concurrency: 300
 
