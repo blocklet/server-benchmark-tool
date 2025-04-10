@@ -1,5 +1,7 @@
 # @blocklet/benchmark
 
+[中文文档](./README-CN.md)
+
 A powerful, flexible HTTP API benchmarking tool tailored for Blocklet and general Node.js services. Supports multiple modes (RPS, concurrency), ramp-up testing, AI-powered analysis, and outputs performance charts and logs.
 
 ## 📦 Installation
