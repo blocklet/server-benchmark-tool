@@ -1,6 +1,6 @@
 {
   "name": "@blocklet/benchmark",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "description": "",
   "main": "benchmark.js",
   "bin": {
@@ -24,6 +24,7 @@
     "chalk": "^4.1.2",
     "chart.js": "^4.4.8",
     "chartjs-node-canvas": "^5.0.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "cli-table-redemption": "^1.0.1",
     "commander": "^10.0.1",
     "dotenv": "^16.4.7",

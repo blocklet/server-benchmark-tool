@@ -35,3 +35,5 @@ benchmark/.env
 benchmark/benchmark.yml
 benchmark/benchmark-*.yml
 benchmark/output.png
+benchmark/util/temp-chart
+benchmark/benchmark-output

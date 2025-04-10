@@ -2,21 +2,22 @@
 require('dotenv').config();
 const fs = require('fs');
 const { OpenAI } = require('openai');
+const path = require('path');
 
 async function analyzeBenchmark({
   language = '中文',
   techStack = 'nodejs',
   model = 'gpt-4o',
-  logFilePath = './benchmark.log',
+  benchmarkRawFilePath,
 } = {}) {
   const openai = new OpenAI({ apiKey: process.env.OPENAI_CLIENT, baseURL: process.env.OPENAI_BASE_URL });
 
-  if (!fs.existsSync(logFilePath)) {
+  if (!fs.existsSync(benchmarkRawFilePath)) {
     console.error('❌ benchmark.log not found');
     return;
   }
 
-  const logContent = fs.readFileSync(logFilePath, 'utf-8');
+  const logContent = fs.readFileSync(benchmarkRawFilePath, 'utf-8');
 
   // 截断以防超过 token 限制
   const maxChars = 40000;
@@ -108,6 +109,7 @@ ${promptText}
     const reply = completion.choices[0].message.content;
     console.log('\n✅ Analysis report:\n');
     console.log(reply);
+    fs.writeFileSync(path.join(process.cwd(), 'benchmark-output', '0-ai-analysis.md'), reply);
   } catch (err) {
     console.error('❌ OpenAI request failed:', err.message);
   }

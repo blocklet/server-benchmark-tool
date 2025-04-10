@@ -2,8 +2,13 @@ const fs = require('fs');
 const util = require('util');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const stripAnsi = require('strip-ansi');
+const path = require('path');
 
-const logFile = fs.createWriteStream('benchmark.log', { flags: 'a' }); // 'a' 表示追加写入
+if (!fs.existsSync(path.join(process.cwd(), 'benchmark-output'))) {
+  fs.mkdirSync(path.join(process.cwd(), 'benchmark-output'), { recursive: true });
+}
+
+const logFile = fs.createWriteStream(path.join(process.cwd(), 'benchmark-output', 'benchmark.log'), { flags: 'a' }); // 'a' 表示追加写入
 const logStdout = process.stdout;
 
 // eslint-disable-next-line func-names, no-console

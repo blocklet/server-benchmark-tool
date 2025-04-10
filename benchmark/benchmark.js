@@ -19,7 +19,8 @@ const replaceApiPlaceholders = require('./util/replace-api-placeholders');
 const replaceApiPrefix = require('./util/replace-api-prefix');
 const consoleTableRamp = require('./util/console-table-ramp');
 const analyzeBenchmark = require('./util/analyze-benchmark');
-const generateChart = require('./util/generate-chart');
+const generateChartImage = require('./util/generate-chart-image');
+const consoleTableRampAll = require('./util/console-table-ramp-all');
 
 function createClient(origin, loginToken) {
   const client = new NodeClient(origin);
@@ -231,8 +232,11 @@ program
       return;
     }
 
-    if (fs.existsSync('benchmark.log')) {
-      fs.writeFileSync('benchmark.log', '');
+    if (!fs.existsSync(path.join(process.cwd(), 'benchmark-output'))) {
+      fs.mkdirSync(path.join(process.cwd(), 'benchmark-output'), { recursive: true });
+    }
+    if (fs.existsSync(path.join(process.cwd(), 'benchmark-output', 'benchmark.log'))) {
+      fs.writeFileSync(path.join(process.cwd(), 'benchmark-output', 'benchmark.log'), '');
       console.log('benchmark.log cleaned');
     }
 
@@ -342,8 +346,11 @@ program
         config.concurrency = ramp * (i + 1);
         await buildOnce();
       }
+      console.log('--------------------------------');
+      consoleTableRampAll(allResults);
+      console.log('--------------------------------');
       consoleTableRamp(allResults);
-      generateChart(allResults, path.join(process.cwd(), 'benchmark-chart.png'));
+      generateChartImage(allResults, path.join(process.cwd(), 'benchmark-output'));
     } else {
       await buildOnce();
     }
@@ -356,14 +363,32 @@ program
     console.log(cyan('Memory (GB):'), `${Math.ceil((sysInfo.mem?.total || 0) / 1024 / 1024 / 1024)}`);
     console.log(cyan('Total Time:'), `${(Date.now() - startTime) / 1000}s`);
 
+    fs.writeFileSync(
+      path.join(process.cwd(), 'benchmark-output', '0-benchmark-raw.yml'),
+      YAML.stringify(
+        {
+          benchmark: allResults,
+          serverVersion,
+          platform: sysInfo.os?.platform,
+          cpuCores: sysInfo.cpu?.cores,
+          memoryGB: `${Math.ceil((sysInfo.mem?.total || 0) / 1024 / 1024 / 1024)}`,
+          totalTime: `${(Date.now() - startTime) / 1000}s`,
+        },
+        null,
+        2
+      )
+    );
     if (config.aiAnalysis?.enable) {
       await analyzeBenchmark({
         language: config.aiAnalysis?.language || '中文',
         techStack: config.aiAnalysis?.techStack || 'node.js',
         model: config.aiAnalysis?.model || 'gpt-4o',
-        logFilePath: path.join(process.cwd(), 'benchmark.log'),
+        benchmarkRawFilePath: path.join(process.cwd(), 'benchmark-output', '0-benchmark-raw.yml'),
       });
     }
+    console.log('--------------------------------');
+    console.log('✅ Benchmark finished, all results are saved in benchmark-output folder');
+    console.log('--------------------------------');
   });
 
 program.parse(process.argv);

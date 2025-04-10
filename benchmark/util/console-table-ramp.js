@@ -17,7 +17,7 @@ function consoleTableRamp(results) {
   // 构造表头
   const rpsHeaders = concurrencyList.map((c) => `${c}C RPS`);
   const table = new Table({
-    head: ['Name', ...rpsHeaders, 'Min', '50%', '90%', 'Max', 'Time'],
+    head: ['Name', ...rpsHeaders, 'Count', 'Success', 'Min', '50%', '90%', 'Max', 'Time'],
   });
 
   // 按 name 分组
@@ -35,6 +35,8 @@ function consoleTableRamp(results) {
     const rpsMap = {};
     for (const c of concurrencyList) rpsMap[c] = 0;
 
+    const countList = [];
+    const successList = [];
     const minList = [];
     const t50List = [];
     const t90List = [];
@@ -45,6 +47,8 @@ function consoleTableRamp(results) {
       const c = item.concurrency;
       if (rpsMap[c] !== undefined) rpsMap[c] += item.rps || 0;
 
+      countList.push(item.count);
+      successList.push(item.success);
       minList.push(item.min);
       t50List.push(item.t50);
       t90List.push(item.t90);
@@ -57,6 +61,8 @@ function consoleTableRamp(results) {
     const row = [
       name,
       ...concurrencyList.map((c) => rpsMap[c]),
+      average(countList),
+      `${((average(successList) / average(countList)) * 100).toFixed(0)}%`,
       average(minList),
       average(t50List),
       average(t90List),

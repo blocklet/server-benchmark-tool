@@ -1,5 +1,7 @@
+const path = require('path');
 const consoleTableRamp = require('./console-table-ramp');
-const generateChart = require('./generate-chart');
+const generateChartImage = require('./generate-chart-image');
+const generateChartHtml = require('./generate-chart-html');
 
 const mockResults = [
   {
@@ -707,4 +709,5 @@ const mockResults = [
 ];
 
 consoleTableRamp(mockResults);
-generateChart(mockResults);
+generateChartImage(mockResults, path.join(__dirname, 'temp-chart'));
+generateChartHtml(mockResults, path.join(__dirname, 'temp-chart', 'chart.html'));
