@@ -33,7 +33,10 @@ benchmark/.env
 
 # benchmark
 benchmark/benchmark.yml
-benchmark/benchmark-*.yml
+benchmark/benchmark-discuss-kit.yml
+benchmark/benchmark-tool.yml
+benchmark/benchmark-server.yml
 benchmark/output.png
 benchmark/util/temp-chart
 benchmark/benchmark-output
+!benchmark/base-yml

@@ -92,6 +92,7 @@ apis:
 | `logError`    | Print error logs to console                                                   |
 | `logResponse` | Print full API responses                                                      |
 | `aiAnalysis`  | Enable GPT-powered result interpretation (requires `OPENAI_CLIENT` in `.env`) |
+| `sitemap`     | The remote endpoint should return a JSON response                             |
 
 ### API List (`apis`)
 
@@ -106,6 +107,59 @@ Each item defines one endpoint to test:
 | `assert` | Assertions on response (supports `not-null`, `null`, or fixed values) |
 | `only`   | If true, run **only** this endpoint                                   |
 | `skip`   | If true, skip this endpoint                                           |
+
+## 🌐 Using `sitemap` to Auto-Load API Definitions
+
+To simplify and centralize API configuration, `@blocklet/benchmark` supports loading APIs dynamically from a remote `sitemap`. This allows you to avoid manually writing all your API definitions in the `benchmark.yml` file, and instead retrieve them from a maintained endpoint.
+
+### 🧩 Configuration
+
+You can enable and configure the `sitemap` in your `benchmark.yml` like this:
+
+```yaml
+sitemap:
+  enable: true
+  url: 'https://your-server-url.com/sitemap'
+```
+
+- `enable`: Set to `true` to activate the feature.
+- `url`: URL of the remote endpoint that returns the sitemap JSON.
+
+> 📌 If `enable` is set to `false`, or the request to the sitemap fails, it will fall back to using the `apis` defined in your `benchmark.yml` file.
+
+---
+
+### 📝 Expected Sitemap Response Format
+
+The remote endpoint should return a JSON response with the following structure:
+
+```json
+{
+  "apis": [
+    {
+      "name": "/api/example",
+      "api": "/api/example"
+    },
+    {
+      "name": "/api/full",
+      "api": "/api/full",
+      "method": "GET",
+      "cookie": "login_token=$$loginToken",
+      "format": "json",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      "skip": false,
+      "only": false,
+      "body": {},
+      "assert": {}
+    }
+  ],
+  "data": {
+    "key": "option use some data"
+  }
+}
+```
 
 ## 📊 Output
 

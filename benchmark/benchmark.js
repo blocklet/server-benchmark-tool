@@ -159,16 +159,16 @@ program
     if (types.length === 1) {
       let config;
       if (options.type === 'discuss-kit') {
-        config = fs.readFileSync(path.resolve(__dirname, './util/benchmark-discuss-kit.yml'), 'utf8');
+        config = fs.readFileSync(path.resolve(__dirname, './base-yml/benchmark-discuss-kit.yml'), 'utf8');
       } else if (options.type === 'tool') {
-        config = fs.readFileSync(path.resolve(__dirname, './util/benchmark-tool.yml'), 'utf8');
+        config = fs.readFileSync(path.resolve(__dirname, './base-yml/benchmark-tool.yml'), 'utf8');
       } else {
-        config = fs.readFileSync(path.resolve(__dirname, './util/benchmark-server.yml'), 'utf8');
+        config = fs.readFileSync(path.resolve(__dirname, './base-yml/benchmark-server.yml'), 'utf8');
       }
       fs.writeFileSync('benchmark.yml', config);
     } else {
       const configs = types.map((type) => {
-        const filePath = path.resolve(__dirname, `./util/benchmark-${type}.yml`);
+        const filePath = path.resolve(__dirname, `./base-yml/benchmark-${type}.yml`);
         if (!fs.existsSync(filePath)) {
           throw new Error(`${filePath} is not found`);
         }
@@ -219,12 +219,7 @@ program
     if (config.data?.loginToken === 'your-login-token') {
       console.error('You not update the loginToken in benchmark.yml');
     }
-    if (config.data?.teamDid.indexOf('did:abt:') === 0) {
-      config.data.teamDid = config.data.teamDid.replace('did:abt:', '');
-    }
-    if (config.data?.userDid.indexOf('did:abt:') === 0) {
-      config.data.userDid = config.data.userDid.replace('did:abt:', '');
-    }
+
     if (config.aiAnalysis?.enable) {
       if (!process.env.OPENAI_CLIENT) {
         console.error('When you enable the aiAnalysis, you need to set the OPENAI_CLIENT in .env');
@@ -244,6 +239,18 @@ program
     if (fs.existsSync(path.join(process.cwd(), 'benchmark-output', 'benchmark.log'))) {
       fs.writeFileSync(path.join(process.cwd(), 'benchmark-output', 'benchmark.log'), '');
       console.log('benchmark.log cleaned');
+    }
+
+    if (config.sitemap?.enable) {
+      const sitemap = await fetch(config.sitemap.url).then((res) => res.json());
+      if (!sitemap.apis) {
+        console.error('sitemap.apis is not found');
+        return;
+      }
+      config.apis = [...sitemap.apis, ...config.apis];
+      if (sitemap.data) {
+        config.data = { ...sitemap.data, ...config.data };
+      }
     }
 
     const allResults = [];

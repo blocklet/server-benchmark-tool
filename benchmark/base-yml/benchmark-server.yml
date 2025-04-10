@@ -35,6 +35,12 @@ logError: false
 # logParseApis indicates whether to log the parsed APIs
 logParseApis: false
 
+# The sitemap will be parsed and the apis will be added to the benchmark runtime
+# If your provide sitemaps, you can add it here, JSON response like: { "apis": [{"name": "/api/simple-example", "api": "/api/simple-example",},{"name": "/api/full-example", "api": "/api/full-example", "method": "GET", "cookie": "login_token=$$loginToken", "format": "json", "headers": {"Content-Type": "application/json; charset=utf-8"}, "skip": false, "only": false, "body": {}, "assert": {}}], "data": {"key": "value"} }
+sitemap:
+  enable: false
+  url: 'https://your-sitemap-url.com/sitemap'
+
 # apiReplace is a map of API endpoints to be replaced with dynamic values
 apiReplace:
   '^/api-router/': '/api-replace-router/'
