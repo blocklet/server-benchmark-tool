@@ -213,8 +213,13 @@ program
 
     const config = loadConfig(configPath);
     if (config.origin === 'https://your-server-url.com') {
-      console.error('Please update the origin in benchmark.yml');
-      return;
+      if (config.sitemap?.enable) {
+        const { origin } = new URL(config.sitemap.url);
+        config.origin = origin;
+      } else {
+        console.error('Please update the origin in benchmark.yml');
+        return;
+      }
     }
     if (config.data?.loginToken === 'your-login-token') {
       console.error('You not update the loginToken in benchmark.yml');
@@ -224,6 +229,18 @@ program
       if (!process.env.OPENAI_CLIENT) {
         console.error('When you enable the aiAnalysis, you need to set the OPENAI_CLIENT in .env');
         return;
+      }
+    }
+
+    if (config.sitemap?.enable) {
+      const sitemap = await fetch(config.sitemap.url).then((res) => res.json());
+      if (!sitemap.apis) {
+        console.error('sitemap.apis is not found');
+        return;
+      }
+      config.apis = [...sitemap.apis, ...config.apis];
+      if (sitemap.data) {
+        config.data = { ...sitemap.data, ...config.data };
       }
     }
 
@@ -239,18 +256,6 @@ program
     if (fs.existsSync(path.join(process.cwd(), 'benchmark-output', 'benchmark.log'))) {
       fs.writeFileSync(path.join(process.cwd(), 'benchmark-output', 'benchmark.log'), '');
       console.log('benchmark.log cleaned');
-    }
-
-    if (config.sitemap?.enable) {
-      const sitemap = await fetch(config.sitemap.url).then((res) => res.json());
-      if (!sitemap.apis) {
-        console.error('sitemap.apis is not found');
-        return;
-      }
-      config.apis = [...sitemap.apis, ...config.apis];
-      if (sitemap.data) {
-        config.data = { ...sitemap.data, ...config.data };
-      }
     }
 
     const allResults = [];
