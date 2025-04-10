@@ -22,8 +22,8 @@ aiAnalysis:
 
 # data contains dynamic values to be used in API requests
 data:
+  appDid: 'your-app-did'
   userDid: 'your-user-did'
-  teamDid: 'your-team-did'
   loginToken: 'your-login-token'
 
 # logResponse indicates whether to log the response body for each request
@@ -43,7 +43,6 @@ apiReplace:
 apis:
   - name: '/discuss-kit/api/discussions/pinned'
     api: '/discuss-kit/api/discussions/pinned'
-    # session cookie for authenticated request
     cookie: 'login_token=$$loginToken'
 
   - name: '/discuss-kit/api/discussions?page=1&size=20'
@@ -56,7 +55,7 @@ apis:
 
   - name: '/discuss-kit/api/boards'
     api: '/discuss-kit/api/boards'
-    # this endpoint doesn't require authentication
+    cookie: 'login_token=$$loginToken'
 
   - name: '/discuss-kit/api/chat/chats'
     api: '/discuss-kit/api/chat/chats'

@@ -1,60 +1,123 @@
-# Server Benchmark
+# @blocklet/benchmark
 
-## How to use
+A powerful, flexible HTTP API benchmarking tool tailored for Blocklet and general Node.js services. Supports multiple modes (RPS, concurrency), ramp-up testing, AI-powered analysis, and outputs performance charts and logs.
 
-1. Prepare: start a server
-2. Install https://test.store.blocklet.dev/blocklets/z2qaAYeWTZkhb5yNHqwos6mJLLK9ykHrxehjx
-3. Config "Invited only" for Static Demo component in Blocklet Dashboard
-4. Install Media kit
-5. Save login_token from cookie in browser
-6. Save any User Did from Blocklet Dashboard
-7. Start Benchmark
-
-## Server use cluster
-
-`ABT_NODE_MAX_CLUSTER_SIZE=3 blocklet server start`
-
-## Use benchmark
-
-Use concurrent mode and require/s mode test(default):
+## 📦 Installation
 
 ```bash
-$ npx @blocklet/benchmark init
+npm install -g @blocklet/benchmark
 ```
 
-User init type:
+Or use it directly via `npx`:
 
 ```bash
-# type: server(default) | discuss-kit | tool
-$ npx @blocklet/benchmark init --type server,discuss-kit
+npx @blocklet/benchmark
 ```
 
-Edit benchmark.yml, change:
+## 🚀 Quick Start
 
-- origin
-- data.userDid
-- data.teamDid
-- data.loginToken
-
-You can edit benchmark.yml and run:
+### Step 1: Initialize Config File
 
 ```bash
-$ npx @blocklet/benchmark run
+npx @blocklet/benchmark init --type server
 ```
 
-You can set config path:
+Other available types:
+
+- `discuss-kit`
+- `tool`
+- You can also combine them: `--type server,tool`
+
+This will generate a `benchmark.yml` file in your current directory.
+
+### Step 2: Run the Benchmark
 
 ```bash
-$ npx @blocklet/benchmark run --config benchmark.yml
+npx @blocklet/benchmark run
 ```
 
-## FAQ
+Options:
 
-How to access blocklet by local domain?
+| Option     | Description                                | Default         |
+| ---------- | ------------------------------------------ | --------------- |
+| `--config` | Path to config file                        | `benchmark.yml` |
+| `--format` | Output format: `row`, `json`, or `table`   | `table`         |
+| `--mode`   | Benchmark mode: `rps`, `concurrent`, `all` | `all`           |
 
-1. Config `server.benchmark.local` to `127.0.0.1` in `/etc/hosts`
-2. Add `server.benchmark.local` from Blocklet Dashboard - Configuration
+## 🧩 Configuration
 
+Here's a sample `benchmark.yml` and explanation of the fields:
+
+```yaml
+origin: https://example.blocklet.dev
+concurrency: 100
+timelimit: 20
+ramp: 20
+data:
+  loginToken: your-login-token
+  teamDid: your-team-did
+  userDid: your-user-did
+body: '{"example": true}'
+logError: true
+logResponse: false
+aiAnalysis:
+  enable: true
+  language: en
+  techStack: node.js
+  model: gpt-4o
+apis:
+  - name: Get User Info
+    api: /api/user/info
+    method: GET
+    assert:
+      id: not-null
+  - name: Update Status
+    api: /api/status
+    method: POST
+    body: '{"status": "ok"}'
+    assert:
+      success: true
 ```
 
-```
+### Top-Level Fields
+
+| Field         | Description                                                                   |
+| ------------- | ----------------------------------------------------------------------------- |
+| `origin`      | Base URL of the API server                                                    |
+| `concurrency` | Number of concurrent users                                                    |
+| `timelimit`   | Duration of the test per mode (in seconds)                                    |
+| `ramp`        | (Optional) Ramp step to gradually increase concurrency                        |
+| `data`        | Dynamic values to be injected into API paths or headers                       |
+| `body`        | Default request body                                                          |
+| `logError`    | Print error logs to console                                                   |
+| `logResponse` | Print full API responses                                                      |
+| `aiAnalysis`  | Enable GPT-powered result interpretation (requires `OPENAI_CLIENT` in `.env`) |
+
+### API List (`apis`)
+
+Each item defines one endpoint to test:
+
+| Field    | Description                                                           |
+| -------- | --------------------------------------------------------------------- |
+| `name`   | Human-readable name of the test case                                  |
+| `api`    | API path (joined with `origin`)                                       |
+| `method` | HTTP method (GET, POST, etc.)                                         |
+| `body`   | Request body (if POST/PUT)                                            |
+| `assert` | Assertions on response (supports `not-null`, `null`, or fixed values) |
+| `only`   | If true, run **only** this endpoint                                   |
+| `skip`   | If true, skip this endpoint                                           |
+
+## 📊 Output
+
+All results are saved to the `benchmark-output` folder:
+
+- `benchmark.log`: All logs
+- `0-benchmark-raw.yml`: Raw result file
+- `*.png`: Chart images (RPS, latency percentiles)
+- `console output`: A summary table of all benchmark results
+
+If `aiAnalysis` is enabled and `OPENAI_CLIENT` is set in `.env`, a GPT-powered summary of the test will be provided in the console.
+
+## 📘 License
+
+MIT License

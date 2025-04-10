@@ -22,8 +22,8 @@ aiAnalysis:
 
 # data provides dynamic values to be used in API requests
 data:
+  appDid: 'your-app-did'
   userDid: 'your-user-did'
-  teamDid: 'your-team-did'
   loginToken: 'your-login-token'
 
 # logResponse determines whether to log the response body of each request

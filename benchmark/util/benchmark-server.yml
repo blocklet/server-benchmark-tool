@@ -22,8 +22,8 @@ aiAnalysis:
 
 # data provides dynamic values to be used in API requests
 data:
+  appDid: 'your-app-did'
   userDid: 'your-user-did'
-  teamDid: 'your-team-did'
   loginToken: 'your-login-token'
 
 # logResponse determines whether to log the response body of each request
@@ -47,7 +47,6 @@ apis:
 
   - name: '/.well-known/service/api/did/session:without-session'
     api: '/.well-known/service/api/did/session'
-    # assert checks expected response fields
     assert:
       error: 'null'
       user: 'not-null'
@@ -84,13 +83,13 @@ apis:
     abtnodeFn: 'getNotifications'
     cookie: 'login_token=$$loginToken'
     body:
-      teamDid: '$$teamDid'
-      userDid: '$$userDid'
+      teamDid: '$$appDid'
+      receiver: '$$userDid'
 
   - name: 'getNotificationComponents'
     api: '/.well-known/service/api/gql'
     abtnodeFn: 'getNotificationComponents'
     cookie: 'login_token=$$loginToken'
     body:
-      teamDid: '$$teamDid'
-      userDid: '$$userDid'
+      teamDid: '$$appDid'
+      receiver: '$$userDid'

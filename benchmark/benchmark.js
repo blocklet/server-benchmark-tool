@@ -172,19 +172,25 @@ program
         if (!fs.existsSync(filePath)) {
           throw new Error(`${filePath} is not found`);
         }
-        return fs.readFileSync(path.resolve(__dirname, `./util/benchmark-${type}.yml`), 'utf8');
+        return fs.readFileSync(filePath, 'utf8');
       });
-      const ymls = configs.map((v) => YAML.parse(v));
+
+      const docs = configs.map((content) => YAML.parseDocument(content));
       const apis = [];
-      ymls.forEach((v) => {
-        if (v.apis) {
-          apis.push(...v.apis);
+
+      docs.forEach((doc) => {
+        const apisNode = doc.get('apis');
+        if (Array.isArray(apisNode?.items)) {
+          apis.push(...apisNode.items.map((item) => item.toJSON()));
         }
       });
-      const yml = ymls[0];
-      yml.apis = apis;
-      const config = YAML.stringify(yml);
-      fs.writeFileSync('benchmark.yml', config);
+
+      // 将合并后的 apis 设置进第一个文档
+      const mergedDoc = docs[0];
+      mergedDoc.set('apis', apis);
+
+      // 写回文件，保留注释，所有字符串加双引号
+      fs.writeFileSync('benchmark.yml', mergedDoc.toString({ defaultStringType: 'QUOTE_SINGLE' }));
     }
 
     console.log(bold(`Benchmark v${version}\n`));
@@ -350,7 +356,7 @@ program
       consoleTableRampAll(allResults);
       console.log('--------------------------------');
       consoleTableRamp(allResults);
-      generateChartImage(allResults, path.join(process.cwd(), 'benchmark-output'));
+      await generateChartImage(allResults, path.join(process.cwd(), 'benchmark-output'));
     } else {
       await buildOnce();
     }
