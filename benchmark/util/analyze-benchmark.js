@@ -109,7 +109,7 @@ ${promptText}
     const reply = completion.choices[0].message.content;
     console.log('\n✅ Analysis report:\n');
     console.log(reply);
-    fs.writeFileSync(path.join(process.cwd(), 'benchmark-output', '7-AI-Analysis.md'), reply);
+    fs.writeFileSync(path.join(process.cwd(), 'benchmark-output', 'README.md'), reply);
   } catch (err) {
     console.error('❌ OpenAI request failed:', err.message);
   }

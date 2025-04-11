@@ -375,7 +375,9 @@ program
     const sysInfo = await getSysInfo();
     const serverVersion = await getServerVersion(origin);
 
-    console.log(cyan('Server Version:'), serverVersion);
+    if (serverVersion) {
+      console.log(cyan('Server Version:'), serverVersion);
+    }
     console.log(cyan('Platform:'), sysInfo.os?.platform);
     console.log(cyan('CPU Cores:'), `${sysInfo.cpu?.cores}`);
     console.log(cyan('Memory (GB):'), `${Math.ceil((sysInfo.mem?.total || 0) / 1024 / 1024 / 1024)}`);
