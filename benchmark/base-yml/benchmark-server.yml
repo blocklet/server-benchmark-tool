@@ -79,7 +79,7 @@ apis:
     format: 'text'
 
   - name: '/.well-known/service/api/user-session/myself'
-    api: '/.well-known/service/api/user-session/myself'
+    api: '/.well-known/service/api/user-session/myself?page=1&pageSize=1&status=expired'
     cookie: 'login_token=$$loginToken'
     assert:
       error: 'null'
