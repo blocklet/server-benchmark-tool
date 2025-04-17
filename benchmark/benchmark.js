@@ -287,6 +287,14 @@ program
           const url = joinUrl(origin, item.api);
           console.log(bold(`Testing ${item.name}`));
 
+          if (item.bodyRaw) {
+            try {
+              item.body = JSON.parse(item.bodyRaw);
+            } catch (err) {
+              console.error(`Error parsing bodyRaw for ${item.name}:`, err);
+            }
+          }
+
           const timePerEndpoint = Math.max(config.timelimit / (modes.length * list.length), 2);
           // eslint-disable-next-line no-await-in-loop
           const res = await benchmarkEndpoint(url, {
