@@ -1,11 +1,9 @@
 {
   "name": "@blocklet/benchmark",
-  "version": "0.0.41",
-  "description": "",
+  "version": "0.0.42",
+  "description": "Easy to benchmark your server and analyze the results with AI",
   "main": "bin.js",
-  "bin": {
-    "server-benchmark": "bin.js"
-  },
+  "bin": "bin.js",
   "scripts": {
     "blocklet-benchmark": "node bin.js"
   },
