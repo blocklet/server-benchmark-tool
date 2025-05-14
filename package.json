@@ -38,6 +38,7 @@
     ]
   },
   "dependencies": {
+    "@aigne/core": "^1.14.0",
     "@arcblock/did-auth": "^1.17.5",
     "@arcblock/did-auth-storage-nedb": "^1.7.1",
     "@blocklet/sdk": "^1.16.33",

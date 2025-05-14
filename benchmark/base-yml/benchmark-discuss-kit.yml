@@ -19,6 +19,7 @@ aiAnalysis:
   language: 'english'
   techStack: 'nodejs'
   model: 'gpt-4o'
+  type: 'aigne'
 
 # data contains dynamic values to be used in API requests
 data:

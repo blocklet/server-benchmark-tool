@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 /* eslint-disable @typescript-eslint/comma-dangle */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-promise-executor-return */
@@ -21,6 +22,7 @@ const consoleTableRamp = require('./util/console-table-ramp');
 const analyzeBenchmark = require('./util/analyze-benchmark');
 const generateChartImage = require('./util/generate-chart-image');
 const consoleTableRampAll = require('./util/console-table-ramp-all');
+const aigneAnalyze = require('./util/aigne-analyze');
 
 function createClient(origin, loginToken) {
   const client = new NodeClient(origin);
@@ -36,6 +38,27 @@ function loadConfig(filePath) {
 function percentile(sortedArr, p) {
   const idx = Math.floor(sortedArr.length * p);
   return sortedArr[idx] || 0;
+}
+
+async function analysis(analysisOptions, outputDir) {
+  const start = Date.now();
+  if (analysisOptions.type === 'openai') {
+    await analyzeBenchmark({
+      language: analysisOptions.language || '中文',
+      techStack: analysisOptions.techStack || 'node.js',
+      model: analysisOptions.model || 'gpt-4o',
+      benchmarkRawFilePath: path.join(process.cwd(), outputDir, '0-benchmark-raw.yml'),
+    });
+    console.log(`✅ OpenAI analyze finished, type: ${analysisOptions.type}, cost ${Date.now() - start}ms`);
+  } else {
+    await aigneAnalyze({
+      language: analysisOptions.language || '中文',
+      techStack: analysisOptions.techStack || 'node.js',
+      model: analysisOptions.model || 'gpt-4o',
+      benchmarkRawFilePath: path.join(process.cwd(), outputDir, '0-benchmark-raw.yml'),
+    });
+    console.log(`✅ AIGNE analyze finished, type: ${analysisOptions.type}, cost ${Date.now() - start}ms`);
+  }
 }
 
 async function getServerVersion(origin) {
@@ -152,7 +175,7 @@ program.version(version);
 
 program
   .command('init')
-  .option('--type <type>', 'type of benchmark: server | discuss-kit | tool | google', 'google')
+  .option('--type <type>', 'type of benchmark: server | discuss-kit | tool | google', 'server')
   .description('initialize config file')
   .action((options) => {
     const types = options.type.split(',');
@@ -162,6 +185,8 @@ program
         config = fs.readFileSync(path.resolve(__dirname, './base-yml/benchmark-discuss-kit.yml'), 'utf8');
       } else if (options.type === 'tool') {
         config = fs.readFileSync(path.resolve(__dirname, './base-yml/benchmark-tool.yml'), 'utf8');
+      } else if (options.type === 'google') {
+        config = fs.readFileSync(path.resolve(__dirname, './base-yml/benchmark-google.yml'), 'utf8');
       } else {
         config = fs.readFileSync(path.resolve(__dirname, './base-yml/benchmark-server.yml'), 'utf8');
       }
@@ -409,16 +434,23 @@ program
       )
     );
     if (config.aiAnalysis?.enable) {
-      await analyzeBenchmark({
-        language: config.aiAnalysis?.language || '中文',
-        techStack: config.aiAnalysis?.techStack || 'node.js',
-        model: config.aiAnalysis?.model || 'gpt-4o',
-        benchmarkRawFilePath: path.join(process.cwd(), outputDir, '0-benchmark-raw.yml'),
-      });
+      await analysis(config.aiAnalysis, options.output || 'benchmark-output');
     }
     console.log('--------------------------------');
     console.log(`✅ Benchmark finished, all results are saved in ${outputDir} folder`);
     console.log('--------------------------------');
+  });
+
+program
+  .command('analyze')
+  .description('analyze the benchmark-output')
+  .option('--output <dir>', 'output path', 'benchmark-output')
+  .option('--language <language>', 'English | 中文', '中文')
+  .option('--techStack <techStack>', 'nodejs | python | java', 'nodejs')
+  .option('--model <model>', 'gpt-4o | gpt-4o-mini', 'gpt-4o-mini')
+  .option('--type <type>', 'openai | aigne', 'aigne')
+  .action(async (options) => {
+    await analysis(options, options.output || 'benchmark-output');
   });
 
 program.parse(process.argv);

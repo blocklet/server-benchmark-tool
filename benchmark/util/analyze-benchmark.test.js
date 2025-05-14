@@ -5,5 +5,5 @@ analyzeBenchmark({
   language: '中文',
   techStack: 'nodejs',
   model: 'gpt-4o',
-  logFilePath: path.join(__dirname, 'analyze-benchmark.log-file'),
+  logFilePath: path.join(__dirname, 'analyze-benchmark.test-log-file'),
 });
