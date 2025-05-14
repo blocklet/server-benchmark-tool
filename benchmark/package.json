@@ -1,15 +1,17 @@
 {
   "name": "@blocklet/benchmark",
-  "version": "0.0.42",
+  "version": "0.0.43",
   "description": "Easy to benchmark your server and analyze the results with AI",
-  "main": "bin.js",
-  "bin": "bin.js",
+  "main": "benchmark.js",
+  "bin": {
+    "server-benchmark": "benchmark.js"
+  },
   "scripts": {
-    "blocklet-benchmark": "node bin.js"
+    "blocklet-benchmark": "node benchmark.js"
   },
   "files": [
     "base-yml",
-    "bin.js",
+    "benchmark.js",
     "util"
   ],
   "publishConfig": {
