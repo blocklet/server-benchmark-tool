@@ -2,16 +2,16 @@
   "name": "@blocklet/benchmark",
   "version": "0.0.43",
   "description": "Easy to benchmark your server and analyze the results with AI",
-  "main": "benchmark.js",
+  "main": "bin.js",
   "bin": {
-    "server-benchmark": "benchmark.js"
+    "server-benchmark": "bin.js"
   },
   "scripts": {
-    "blocklet-benchmark": "node benchmark.js"
+    "blocklet-benchmark": "node bin.js"
   },
   "files": [
     "base-yml",
-    "benchmark.js",
+    "bin.js",
     "util"
   ],
   "publishConfig": {
@@ -21,7 +21,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@abtnode/client": "^1.16.42-beta-20250408-072924-4b6a877a",
+    "@abtnode/client": "^1.15.17",
     "@aigne/core": "^1.14.0",
     "chalk": "^4.1.2",
     "chart.js": "^4.4.8",
