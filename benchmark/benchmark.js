@@ -152,7 +152,7 @@ program.version(version);
 
 program
   .command('init')
-  .option('--type <type>', 'type of benchmark: server | discuss-kit | tool', 'server')
+  .option('--type <type>', 'type of benchmark: server | discuss-kit | tool | google', 'google')
   .description('initialize config file')
   .action((options) => {
     const types = options.type.split(',');
@@ -203,7 +203,9 @@ program
   .option('--config <path>', 'path to JSON or YML config file')
   .option('--format [string]', 'output format: row, json, table', 'table')
   .option('--mode <mode>', 'request mode: rps | concurrent | all', 'all')
+  .option('--output <dir>', 'output path', 'benchmark-output')
   .action(async (options) => {
+    const outputDir = options.output || 'benchmark-output';
     const startTime = Date.now();
     const configPath = options.config || path.join(process.cwd(), 'benchmark.yml');
     if (!fs.existsSync(configPath)) {
@@ -250,11 +252,11 @@ program
       return;
     }
 
-    if (!fs.existsSync(path.join(process.cwd(), 'benchmark-output'))) {
-      fs.mkdirSync(path.join(process.cwd(), 'benchmark-output'), { recursive: true });
+    if (!fs.existsSync(path.join(process.cwd(), outputDir))) {
+      fs.mkdirSync(path.join(process.cwd(), outputDir), { recursive: true });
     }
-    if (fs.existsSync(path.join(process.cwd(), 'benchmark-output', 'benchmark.log'))) {
-      fs.writeFileSync(path.join(process.cwd(), 'benchmark-output', 'benchmark.log'), '');
+    if (fs.existsSync(path.join(process.cwd(), outputDir, 'benchmark.log'))) {
+      fs.writeFileSync(path.join(process.cwd(), outputDir, 'benchmark.log'), '');
       console.log('benchmark.log cleaned');
     }
 
@@ -376,7 +378,7 @@ program
       consoleTableRampAll(allResults);
       console.log('--------------------------------');
       consoleTableRamp(allResults);
-      await generateChartImage(allResults, path.join(process.cwd(), 'benchmark-output'));
+      await generateChartImage(allResults, path.join(process.cwd(), outputDir));
     } else {
       await buildOnce();
     }
@@ -392,7 +394,7 @@ program
     console.log(cyan('Total Time:'), `${(Date.now() - startTime) / 1000}s`);
 
     fs.writeFileSync(
-      path.join(process.cwd(), 'benchmark-output', '0-benchmark-raw.yml'),
+      path.join(process.cwd(), outputDir, '0-benchmark-raw.yml'),
       YAML.stringify(
         {
           benchmark: allResults,
@@ -411,11 +413,11 @@ program
         language: config.aiAnalysis?.language || '中文',
         techStack: config.aiAnalysis?.techStack || 'node.js',
         model: config.aiAnalysis?.model || 'gpt-4o',
-        benchmarkRawFilePath: path.join(process.cwd(), 'benchmark-output', '0-benchmark-raw.yml'),
+        benchmarkRawFilePath: path.join(process.cwd(), outputDir, '0-benchmark-raw.yml'),
       });
     }
     console.log('--------------------------------');
-    console.log('✅ Benchmark finished, all results are saved in benchmark-output folder');
+    console.log(`✅ Benchmark finished, all results are saved in ${outputDir} folder`);
     console.log('--------------------------------');
   });
 
