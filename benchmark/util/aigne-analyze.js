@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { AIAgent, AIGNE } = require('@aigne/core');
 // eslint-disable-next-line import/extensions
-const { OpenAIChatModel } = require('@aigne/core/models/openai-chat-model.js');
+const { OpenAIChatModel } = require('@aigne/openai');
 const aiPrompt = require('./ai-prompt');
 
 const model = new OpenAIChatModel({
