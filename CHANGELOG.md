@@ -1,3 +1,7 @@
+## 1.0.9 (2025-6-6)
+
+- feat: update aigne version
+
 ## 1.0.8 (2025-4-3)
 
 - Add only test match url
