@@ -1,3 +1,7 @@
+## 1.0.10 (2025-6-24)
+
+- fix: add strip-ansi@6.0.1 lib to benchmark package
+
 ## 1.0.9 (2025-6-6)
 
 - feat: update aigne version

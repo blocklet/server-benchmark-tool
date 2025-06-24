@@ -32,6 +32,7 @@
     "commander": "^10.0.1",
     "dotenv": "^16.4.7",
     "openai": "^4.93.0",
+    "strip-ansi": "^6.0.1",
     "systeminformation": "^5.17.12",
     "url-join": "^4.0.1",
     "yaml": "^2.7.1"
