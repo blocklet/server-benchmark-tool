@@ -1,6 +1,6 @@
 {
   "name": "@blocklet/benchmark",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "description": "Easy to benchmark your server and analyze the results with AI",
   "main": "bin.js",
   "bin": {
@@ -32,7 +32,7 @@
     "commander": "^10.0.1",
     "dotenv": "^16.4.7",
     "openai": "^4.93.0",
-    "strip-ansi": "^6.0.1",
+    "strip-ansi": "7.1.0",
     "systeminformation": "^5.17.12",
     "url-join": "^4.0.1",
     "yaml": "^2.7.1"

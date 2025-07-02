@@ -15,7 +15,10 @@ const logStdout = process.stdout;
 console.log = function () {
   // eslint-disable-next-line prefer-rest-params
   const rawMessage = util.format.apply(null, arguments);
-  const cleanMessage = stripAnsi(rawMessage); // 去掉颜色控制符
+  let cleanMessage = rawMessage;
+  if (typeof stripAnsi === 'function') {
+    cleanMessage = stripAnsi(rawMessage); // 去掉颜色控制符
+  }
   const line = `${cleanMessage}\n`;
 
   logFile.write(line); // 写入纯净版本到文件
