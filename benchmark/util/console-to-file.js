@@ -1,7 +1,6 @@
 const fs = require('fs');
 const util = require('util');
 // eslint-disable-next-line import/no-extraneous-dependencies
-const stripAnsi = require('strip-ansi');
 const path = require('path');
 
 if (!fs.existsSync(path.join(process.cwd(), 'benchmark-output'))) {
@@ -15,11 +14,7 @@ const logStdout = process.stdout;
 console.log = function () {
   // eslint-disable-next-line prefer-rest-params
   const rawMessage = util.format.apply(null, arguments);
-  let cleanMessage = rawMessage;
-  if (typeof stripAnsi === 'function') {
-    cleanMessage = stripAnsi(rawMessage); // 去掉颜色控制符
-  }
-  const line = `${cleanMessage}\n`;
+  const line = `${rawMessage}\n`;
 
   logFile.write(line); // 写入纯净版本到文件
   logStdout.write(`${rawMessage}\n`); // 彩色输出到终端

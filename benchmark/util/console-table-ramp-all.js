@@ -11,6 +11,10 @@ function consoleTableRampAll(results) {
   // 构造表头
   const table = new Table({
     head: ['Name', 'Concurrency', 'Count', 'Success', 'RPS', 'Min', '50%', '90%', 'Max', 'Time'],
+    style: {
+      head: [], // 禁用表头颜色
+      border: [], // 禁用边框颜色
+    },
   });
 
   // 按 name 分组

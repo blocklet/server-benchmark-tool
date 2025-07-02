@@ -7,7 +7,6 @@
 require('./util/console-to-file');
 const { Command } = require('commander');
 const Table = require('cli-table-redemption');
-const { bold, cyan } = require('chalk');
 const joinUrl = require('url-join');
 const NodeClient = require('@abtnode/client');
 const fs = require('fs');
@@ -218,7 +217,7 @@ program
       fs.writeFileSync('benchmark.yml', mergedDoc.toString({ defaultStringType: 'QUOTE_SINGLE' }));
     }
 
-    console.log(bold(`Benchmark v${version}\n`));
+    console.log(`Benchmark v${version}\n`);
     console.log('benchmark.yml file is initialized');
   });
 
@@ -300,19 +299,19 @@ program
     }
 
     const buildOnce = async () => {
-      console.log(bold(`Benchmarking ${cyan(origin)}\n`));
+      console.log(`Benchmarking ${origin}\n`);
 
       const modes = config.mode === 'all' ? ['rps', 'concurrent'] : [config.mode];
       const resultsByMode = {};
 
       for (const mode of modes) {
-        console.log(bold(`\n--- Testing endpoints in mode ${mode} ---\n`));
+        console.log(`\n--- Testing endpoints in mode ${mode} ---\n`);
 
         const results = [];
 
         for (const item of list) {
           const url = joinUrl(origin, item.api);
-          console.log(bold(`Testing ${item.name}`));
+          console.log(`Testing ${item.name}`);
 
           if (item.bodyRaw) {
             try {
@@ -359,7 +358,10 @@ program
             'Max',
             'Test Time',
           ],
-          style: { head: ['cyan', 'bold'] },
+          style: {
+            head: [], // 禁用表头颜色
+            border: [], // 禁用边框颜色
+          },
         });
 
         results.forEach((result) => {
@@ -383,7 +385,7 @@ program
           concurrent: 'Concurrent Mode: Keeps concurrency level steady.',
         };
 
-        console.log(`\n${bold('-----------------')}\n`);
+        console.log('\n-----------------\n');
         console.log(`Mode: ${mode} - ${modeDescriptions[mode]}`);
         console.log(table.toString());
       }
@@ -411,12 +413,12 @@ program
     const serverVersion = await getServerVersion(origin);
 
     if (serverVersion) {
-      console.log(cyan('Server Version:'), serverVersion);
+      console.log('Server Version:', serverVersion);
     }
-    console.log(cyan('Platform:'), sysInfo.os?.platform);
-    console.log(cyan('CPU Cores:'), `${sysInfo.cpu?.cores}`);
-    console.log(cyan('Memory (GB):'), `${Math.ceil((sysInfo.mem?.total || 0) / 1024 / 1024 / 1024)}`);
-    console.log(cyan('Total Time:'), `${(Date.now() - startTime) / 1000}s`);
+    console.log('Platform:', sysInfo.os?.platform);
+    console.log('CPU Cores:', `${sysInfo.cpu?.cores}`);
+    console.log('Memory (GB):', `${Math.ceil((sysInfo.mem?.total || 0) / 1024 / 1024 / 1024)}`);
+    console.log('Total Time:', `${(Date.now() - startTime) / 1000}s`);
 
     fs.writeFileSync(
       path.join(process.cwd(), outputDir, '0-benchmark-raw.yml'),
