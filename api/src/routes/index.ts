@@ -35,7 +35,7 @@ router.get('/users', async (req, res) => {
     query.search = search as string;
   }
 
-  const { users } = await await client.getUsers({ query });
+  const { users } = await client.getUsers({ query });
 
   if (isReturn === '0') {
     res.status(200).json(null);
@@ -54,7 +54,7 @@ router.get('/blocklet', async (req, res) => {
     query.search = search as string;
   }
 
-  const blocklet = await await client.getBlocklet();
+  const blocklet = await client.getBlocklet();
 
   if (isReturn === '0') {
     res.status(200).json(null);
