@@ -1,6 +1,15 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Home() {
+  const [did, setDid] = useState('');
+  const handleGetUsers = () => {
+    fetch(`/api/getUsers/${did}`)
+      .then((response) => response.json())
+      // eslint-disable-next-line no-console
+      .then((data) => console.log(data))
+      .catch((error) => console.error('Error:', error));
+  };
   return (
     <header className="app-header">
       <h1>Component for blocklet server benchmark</h1>
@@ -20,6 +29,10 @@ function Home() {
       <a className="app-link" href="https://developer.blocklet.io/docs/" target="_blank" rel="noopener noreferrer">
         Learn Blocklet
       </a>
+      <input type="text" placeholder="user-did" value={did} onChange={(e) => setDid(e.target.value)} />
+      <button className="app-link" onClick={handleGetUsers} type="button">
+        Get Users
+      </button>
     </header>
   );
 }

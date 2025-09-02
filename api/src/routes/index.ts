@@ -1,5 +1,5 @@
 // import middleware from '@blocklet/sdk/lib/middlewares';
-import Auth from '@blocklet/sdk/lib/service/auth';
+import Auth from '@blocklet/sdk/service/auth';
 import { Router } from 'express';
 
 const router = Router();
@@ -62,6 +62,22 @@ router.get('/blocklet', async (req, res) => {
   }
 
   res.json(blocklet);
+});
+
+router.get('/getUsers/:did', async (req, res) => {
+  const { did } = req.params;
+  const { search } = req.query;
+
+  const query = {} as { search?: string };
+  if (search) {
+    query.search = search as string;
+  }
+
+  const inviterData = await client.getUsers({
+    query: { invitee: did, generation: 1 },
+  });
+
+  res.json(inviterData);
 });
 
 router.get('/date', (req, res) => {
