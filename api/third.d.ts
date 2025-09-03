@@ -1,5 +1,3 @@
-declare module '@blocklet/sdk/service/auth';
-
 declare module 'vite-plugin-blocklet';
 
 declare module 'express-history-api-fallback';
